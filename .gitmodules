@@ -1,0 +1,6 @@
+[submodule "lerobot_piper"]
+	path = lerobot_piper
+	url = https://github.com/Alvin0523/lerobot_piper.git
+[submodule "vlash"]
+	path = vlash
+	url = https://github.com/Alvin0523/vlash.git

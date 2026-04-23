@@ -1,38 +1,45 @@
-    [workspace]
-    authors = ["Wei Ming <alvinwm0523@gmail.com>"]
-    channels = ["conda-forge"]
-    name = "vlash-piper"
-    platforms = ["linux-aarch64","linux-64"]
-    version = "0.1.0"
+[workspace]
+authors = ["Wei Ming <alvinwm0523@gmail.com>"]
+channels = ["conda-forge"]
+name = "vlash-piper"
+platforms = ["linux-aarch64","linux-64"]
+version = "0.1.0"
 
-    [dependencies]
-    python = "3.10.*"
-    ffmpeg = "==7.1.1"
-    cmake = ">=3.29"
-    zensical = "*" 
+[dependencies]
+python = "3.10.*"
+ffmpeg = "==7.1.1"
+cmake = ">=3.29"
+zensical = "*" 
+rerun-sdk = "*"
+wrapt = "<2"
 
-    # PyTorch with CUDA 12.8 (RTX 5080 / Blackwell needs torch >= 2.6)
-    [pypi-options]
-    extra-index-urls = ["https://download.pytorch.org/whl/cu128"]
-    index-strategy = "unsafe-best-match"  
+# PyTorch with CUDA 12.8 (RTX 5080 / Blackwell needs torch >= 2.6)
+[pypi-options]
+extra-index-urls = ["https://download.pytorch.org/whl/cu128"]
+index-strategy = "unsafe-best-match"  
 
-    [pypi-dependencies]
-    torch = ">=2.6.0"
-    torchvision = ">=0.21.0"
-    torchcodec = ">=0.3.0"
+[pypi-dependencies]
+torch = ">=2.6.0"
+torchvision = ">=0.21.0"
+torchcodec = ">=0.3.0"
 
-    # lerobot_piper installs AS the "lerobot" package (version bumped to 0.4.1
-    # so vlash's lerobot==0.4.1 pin is satisfied without pulling from PyPI)
-    lerobot = { path = "lerobot_piper", editable = true, extras = ["feetech", "smolvla"] }
+# lerobot_piper installs AS the "lerobot" package (version bumped to 0.4.1
+# so vlash's lerobot==0.4.1 pin is satisfied without pulling from PyPI)
+lerobot = { path = "lerobot_piper", editable = true, extras = ["feetech", "smolvla", "intelrealsense"] }
 
-    # vlash itself
-    vlash = { path = "vlash", editable = true }
+# vlash itself
+vlash = { path = "vlash", editable = true }
 
-    # piper hardware SDK (used by lerobot_piper's PiperMotorsBus)
-    piper-sdk = ">=0.4.1"
-    wego-piper = ">=0.0.2"
+# piper hardware SDK (used by lerobot_piper's PiperMotorsBus)
+piper-sdk = ">=0.4.1"
+wego-piper = ">=0.0.2"
 
-    # vlash other deps (peft, bitsandbytes, flask — reachy2_sdk only needed for reachy robot)
-    peft = "==0.18.0"
-    bitsandbytes = ">=0.48.2"
-    flask = ">=3.1.2"
+# vlash other deps (peft, bitsandbytes, flask — reachy2_sdk only needed for reachy robot)
+peft = "==0.18.0"
+bitsandbytes = ">=0.48.2"
+flask = ">=3.1.2"
+
+[tasks]                                                                                                                                   
+can = {cmd = "bash scripts/init_orin_can.sh", description = "can activation"}
+teleop = {cmd = "bash scripts/teleop.sh", description = "teleoperation"}
+record = {cmd = "bash scripts/record.sh", description = "recording episodes"}

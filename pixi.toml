@@ -2,8 +2,11 @@
 authors = ["Wei Ming <alvinwm0523@gmail.com>"]
 channels = ["conda-forge"]
 name = "vlash-piper"
-platforms = ["linux-aarch64","linux-64"]
+platforms = ["linux-aarch64"]
 version = "0.1.0"
+
+[activation]
+scripts = ["scripts/activate.sh"]
 
 [dependencies]
 python = "3.10.*"
@@ -12,16 +15,18 @@ cmake = ">=3.29"
 zensical = "*" 
 rerun-sdk = "*"
 wrapt = "<2"
+setuptools = "<82"
 
-# PyTorch with CUDA 12.8 (RTX 5080 / Blackwell needs torch >= 2.6)
+# PyTorch for Jetson Orin (aarch64 with CUDA support)
 [pypi-options]
-extra-index-urls = ["https://download.pytorch.org/whl/cu128"]
+extra-index-urls = ["https://pypi.jetson-ai-lab.io/jp6/cu126/+simple/"]
 index-strategy = "unsafe-best-match"  
 
 [pypi-dependencies]
-torch = ">=2.6.0"
-torchvision = ">=0.21.0"
-torchcodec = ">=0.3.0"
+torch = "==2.11.0"
+torchvision = "==0.26.0"
+torchcodec = "==0.10.0"
+triton = "==3.6.0"
 
 # lerobot_piper installs AS the "lerobot" package (version bumped to 0.4.1
 # so vlash's lerobot==0.4.1 pin is satisfied without pulling from PyPI)
@@ -42,4 +47,11 @@ flask = ">=3.1.2"
 [tasks]                                                                                                                                   
 can = {cmd = "bash scripts/init_orin_can.sh", description = "can activation"}
 teleop = {cmd = "bash scripts/teleop.sh", description = "teleoperation"}
+cam_check = {cmd = "python3 -m lerobot.find_cameras realsense", description = "check camera"}
 record = {cmd = "bash scripts/record.sh", description = "recording episodes"}
+train-pi05-lora = {cmd = "vlash train vlash/examples/train/pi05/async_lora_piper.yaml", description = "fine-tune pi0.5 async with LoRA"}
+train-pi05-sync = {cmd = "vlash train vlash/examples/train/pi05/sync_piper.yaml", description = "fine-tune pi0.5 sync (non-LoRA)"}
+train-pi05-sync-lora = {cmd = "vlash train vlash/examples/train/pi05/sync_lora_piper.yaml", description = "fine-tune pi0.5 sync with LoRA"}
+infer-sync = {cmd = "vlash run vlash/examples/inference/sync_piper.yaml", description = "run sync inference (Piper robot)"}
+infer-async = {cmd = "vlash run vlash/examples/inference/async_piper.yaml", description = "run async inference (Piper robot)"}
+infer-async-fast = {cmd = "vlash run vlash/examples/inference/async_piper.yaml --action_quant_ratio=2", description = "run async inference with 2x action quantization"}

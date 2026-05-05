@@ -39,11 +39,11 @@ execute:
 
 Transfer learning with pre-trained vision-language models has become the dominant paradigm in robot manipulation. **PI0.5** [@black2024pi0] is a flow-matching Vision-Language-Action (VLA) model that decomposes a manipulation policy into a PaliGemma-style vision-language backbone and a trajectory-denoising head, outputting a *chunk* of $H$ future joint targets per inference call. A fundamental tension arises when deploying such models on resource-constrained embedded hardware: the time required to compute a new chunk ($T_\text{infer}$) is non-negligible relative to the chunk execution time ($H / f_\text{control}$), forcing the arm to pause at every chunk boundary in the standard *synchronous* regime.
 
-This report presents the first known systematic study of deploying PI0.5 via the **VLASH** framework [@han2025vlash] on a AGILE X Robotics Piper 6-DOF arm running on an NVIDIA Jetson AGX Orin, targeting a **ball pick-and-place** task. To the best of our knowledge, this is the first deployment of the PI0.5 model on Jetson AGX Orin embedded hardware. The contributions documented here are:
+This report presents the first known systematic study of deploying PI0.5 via the **VLASH** framework [@han2025vlash] on an Agile X Robotics Piper 6-DOF arm running on an NVIDIA Jetson AGX Orin, targeting a **ball pick-and-place** task. To the best of our knowledge, this is the first deployment of the PI0.5 model on Jetson AGX Orin embedded hardware. The contributions documented here are:
 
 - **Integration:** five targeted compatibility shims bridging VLASH against the `lerobot_piper` robot driver on `linux-aarch64`.
-- **Training configurations:** three fine-tuning regimes (async + LoRA, sync, sync + LoRA) with fully specified hyperparameters.
-- **Latency benchmarks:** empirical measurements showing a 29.5× reduction in mean per-inference time (184.5 ms vs. 5444.1 ms) and a 2.9× reduction in task completion time (52 s vs. 153 s) for asynchronous inference relative to synchronous inference on a reference desktop GPU.
+- **Training configurations:** two fine-tuning regimes (async + LoRA, sync + LoRA) with fully specified hyperparameters.
+- **Latency benchmarks:** empirical measurements showing a 29.5× reduction in mean per-inference time (184.5 ms vs. 5444.1 ms) and a 2.9× reduction in task completion time (52 s vs. 153 s) for asynchronous inference relative to synchronous inference on the Jetson AGX Orin.
 - **On-device async inference:** validation that asynchronous TDA-based inference runs correctly on the Jetson AGX Orin, enabling the full VLASH pipeline on embedded hardware.
 
 {{< pagebreak >}}
@@ -69,7 +69,7 @@ Jetson deployment of deep learning is well-studied for *perception* (object dete
 1.  **Memory & latency mismatch**: Perception models tolerate 100–500 ms latency; 50 ms GPU memory transfer is acceptable. Policy models must execute in \<1 s per chunk or the robot loses reactivity.
 2.  **Dependency fragmentation**: Modern VLA models depend on PyTorch 2.11+, transformers, PEFT, rerun. JetPack isolates aarch64 wheels, causing transitive dependency conflicts (e.g., `rerun-sdk` requires `numpy < 2`, `transformers` 4.45+ requires `numpy ≥ 2`).
 
-**Our contribution**: Systematic intergration of a turnkey solution to deploy VLAs on realistic edge hardware
+**Our contribution**: Systematic integration of a turnkey solution to deploy VLAs on realistic edge hardware
 
 ### Robot Learning Frameworks
 
@@ -83,7 +83,7 @@ LeRobot [@team2024lerobot] provides the standard abstraction for robot dataset, 
 | **Inference mode** | Synchronous (standard) | Quantifies sync vs. async gap |
 | **Latency optimization** | Quantization, distillation, pruning | Native bfloat16 |
 | **Dependency management** | Generic Python packages | JetPack-specific aarch64 conflict resolution |
-| **Task** | Multi-task generalization | Sequencial task black and white ball sorting (proof-of-concept) |
+| **Task** | Multi-task generalization | Sequential task: black and white ball sorting (proof-of-concept) |
 
 {{< pagebreak >}}
 
@@ -174,7 +174,7 @@ The `lerobot_piper` repository [@lerobot_piper] provides `PiperFollowerConfig` a
 
 ## Integration {#sec-integration}
 
-VLASH and `lerobot_piper` are independently developed repositories that share a common upstream ancestor (LeRobot) but were never designed to interoperate. Bridging them on Jetson Orin surfaced four categories of incompatibility, each rooted in the JetPack aarch64 software stack rather than in either package's core logic.
+VLASH and `lerobot_piper` are independently developed repositories that share a common upstream ancestor (LeRobot) but were never designed to interoperate. Bridging them on Jetson Orin surfaced five categories of incompatibility, each rooted in the JetPack aarch64 software stack rather than in either package's core logic.
 
 **Dependency conflicts** arose because VLASH and `lerobot_piper` pin different versions of shared libraries (`transformers`, `rerun-sdk`). On a desktop system these conflicts are often resolved silently by the package manager; on JetPack, where many packages have no `manylinux_2_28_aarch64` wheel at all, a wrong version pin means the package is simply unavailable. The resolution strategy was to relax upper-bound pins rather than introduce new hard constraints, so that the JetPack-compatible version range is naturally selected.
 
@@ -194,7 +194,7 @@ All five issues were resolved without modifying the core logic of either upstrea
 
 ### Dataset Preparation
 
-Demonstrations were collected via **kinesthetic teaching**: an operator physically guides the arm through the pick-and-place motion while the system records joint states and camera streams. Each episode was triggered manually at the start o a clean arm home pose and terminated upon successful placement.
+Demonstrations were collected via **kinesthetic teaching**: an operator physically guides the arm through the pick-and-place motion while the system records joint states and camera streams. Each episode was triggered manually at the start of a clean arm home pose and terminated upon successful placement.
 
 | Property            | Value                                      |
 |---------------------|--------------------------------------------|
@@ -276,7 +276,7 @@ All training YAML configurations are available in the repository. Checkpoints ar
 
 ### Dataset
 
-All models reported here were trained on dataset, consisting of demonstrations of black and white ball pick-and-place task collected via kinesthetic teaching. Observations include wrist (`wrist`) and overhead (`up`) RealSense streams at 640×480, and the six-dimensional joint state vector. All models use `state_cond: true`.
+All models reported here were trained on the 50-episode pick-and-place dataset, consisting of demonstrations of black and white ball pick-and-place task collected via kinesthetic teaching. Observations include wrist (`wrist`) and overhead (`up`) RealSense streams at 640×480, and the six-dimensional joint state vector. All models use `state_cond: true`.
 
 ### Hyperparameters
 
@@ -459,7 +459,7 @@ This report has presented the complete pipeline for fine-tuning and deploying PI
 
 The integration work revealed that the primary barrier to VLA edge deployment is not model capability or hardware capacity, but **software stack fragmentation**. The JetPack ecosystem's closed-loop dependency management, platform-specific library coupling, and compiler limitations create a class of integration challenges that are absent on desktop systems and undocumented in the VLA literature. The five compatibility shims documented here address these challenges in a minimally invasive way, and collectively form a reusable integration template for future deployments of VLASH or similar frameworks on JetPack-based hardware.
 
-On the inference side, latency benchmarks confirm that asynchronous inference with TDA reduces per-call latency by 29.5× and task completion time by 2.9× relative to synchronous inference on a reference desktop GPU. Crucially, asynchronous inference also runs correctly on the Jetson AGX Orin, meaning the full VLASH pipeline — TDA training, LoRA fine-tuning, and async deployment — is validated end-to-end on embedded hardware.
+On the inference side, latency benchmarks on the Jetson AGX Orin confirm that asynchronous inference with TDA reduces per-call latency by 29.5× and task completion time by 2.9× relative to synchronous inference, with the full VLASH pipeline — TDA training, LoRA fine-tuning, and async deployment — validated end-to-end on embedded hardware.
 
 The broader implication is that **state-of-the-art VLA policies with asynchronous inference are viable on consumer embedded hardware today**. The training infrastructure, integration shims, and latency characterisation presented here form a reusable foundation for future VLA edge deployments beyond the Piper arm platform.
 

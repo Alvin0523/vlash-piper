@@ -25,7 +25,7 @@
     
     
       
-        <title>Index - Vlash-piper</title>
+        <title>Documentation Index - Vlash-piper</title>
       
     
     
@@ -80,7 +80,8 @@
     <label class="md-overlay" for="__drawer" aria-label="Navigation"></label>
     <div data-md-component="skip">
       
-        <a href="#__skip" class="md-skip">
+        
+        <a href="#documentation-index" class="md-skip">
           Skip to content
         </a>
       
@@ -116,7 +117,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Index
+              Documentation Index
             
           </span>
         </div>
@@ -219,6 +220,26 @@
       
       
       
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
       
       <a href="" class="md-nav__link md-nav__link--active">
         
@@ -236,6 +257,59 @@
   
 
       </a>
+      
+        
+
+
+<nav class="md-nav md-nav--secondary" aria-label="On this page">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      On this page
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#main-reference" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Main Reference
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#integration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Integration
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#problems-diagnostics-log" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Problems &amp; Diagnostics Log
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
       
     </li>
   
@@ -338,6 +412,13 @@
                     
                     
                     
+                      
+                    
+                    
+                      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+                      <div class="md-sidebar-button__wrapper">
+                        <label class="md-sidebar-button" for="__toc"></label>
+                      </div>
                     
                   
                   <div class="md-sidebar__inner">
@@ -348,6 +429,49 @@
   
   
   
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      On this page
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#main-reference" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Main Reference
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#integration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Integration
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#problems-diagnostics-log" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Problems &amp; Diagnostics Log
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
   
 </nav>
                   </div>
@@ -370,9 +494,19 @@
                 
                   
 
-  <h1 id="__skip">Index</h1>
-
-
+<h1 id="documentation-index">Documentation Index<a class="headerlink" href="#documentation-index" title="Permanent link">&para;</a></h1>
+<h2 id="main-reference">Main Reference<a class="headerlink" href="#main-reference" title="Permanent link">&para;</a></h2>
+<ul>
+<li><a href="report/">Full Technical Report</a> — System specs, architecture, training &amp; inference configs, async vs sync deep dive, VLASH vs LeRobot comparison, data collection, camera setup, HuggingFace setup, benchmarking, Pixi task reference</li>
+</ul>
+<h2 id="integration">Integration<a class="headerlink" href="#integration" title="Permanent link">&para;</a></h2>
+<ul>
+<li><a href="integration/">Integration Notes</a> — Why lerobot_piper, every file changed, pyproject.toml fixes, constants shim, rerun API rename, run_config.py PiperFollower import, pixi.toml setup</li>
+</ul>
+<h2 id="problems-diagnostics-log">Problems &amp; Diagnostics Log<a class="headerlink" href="#problems-diagnostics-log" title="Permanent link">&para;</a></h2>
+<ul>
+<li><a href="problems/">Problems, Diagnostics &amp; Fixes</a> — torch.compile crash on Jetson (nvgpu), USB camera frame drop analysis (episodes 020 &amp; 041), config mismatch issues, all integration bugs fixed, aarch64 dependency risks</li>
+</ul>
 
 
 

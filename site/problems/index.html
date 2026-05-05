@@ -1,0 +1,1417 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Using vlash with lerobot-piper">
+      
+      
+        <meta name="author" content="Wong Wei Ming, Shao Ying Zhan, Chen Yusen">
+      
+      
+      
+      
+      
+        
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="zensical-0.0.34">
+    
+    
+      
+        <title>Problems, Diagnostics & Fixes Log - Vlash-piper</title>
+      
+    
+    
+      
+        
+      
+      <link rel="stylesheet" href="../assets/stylesheets/modern/main.53a7feaf.min.css">
+      
+        
+          
+        
+        <link rel="stylesheet" href="../assets/stylesheets/modern/palette.dfe2e883.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:300,300i,400,400i,500,500i,700,700i%7CJetBrains+Mono:400,400i,700,700i&amp;display=fallback">
+        <style>:root{--md-text-font:"Inter";--md-code-font:"JetBrains Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,t)=>(e<<5)-e+t.charCodeAt(0)),0),__md_get=(e,t=localStorage,a=__md_scope)=>JSON.parse(t.getItem(a.pathname+"."+e)),__md_set=(e,t,a=localStorage,_=__md_scope)=>{try{a.setItem(_.pathname+"."+e,JSON.stringify(t))}catch(e){}},document.documentElement.setAttribute("data-platform",navigator.platform)</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer" aria-label="Navigation"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#problems-diagnostics-fixes-log" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="./.." title="Vlash-piper" class="md-header__button md-logo" aria-label="Vlash-piper" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-book-open" viewBox="0 0 24 24"><path d="M12 7v14M3 18a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3 3 3 0 0 0-3-3z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer" aria-label="Navigation">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-menu" viewBox="0 0 24 24"><path d="M4 5h16M4 12h16M4 19h16"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Vlash-piper
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Problems, Diagnostics &amp; Fixes Log
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="none" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="none" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-moon" viewBox="0 0 24 24"><path d="M20.985 12.486a9 9 0 1 1-9.473-9.472c.405-.022.617.46.402.803a6 6 0 0 0 8.268 8.268c.344-.215.825-.004.803.401"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search" aria-label="Search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-search" viewBox="0 0 24 24"><path d="m21 21-4.34-4.34"/><circle cx="11" cy="11" r="8"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog" aria-label="Search">
+  <button type="button" class="md-search__button">
+    Search
+  </button>
+</div>
+      
+    
+    <div class="md-header__source">
+      
+    </div>
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="./.." title="Vlash-piper" class="md-nav__button md-logo" aria-label="Vlash-piper" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-book-open" viewBox="0 0 24 24"><path d="M12 7v14M3 18a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3 3 3 0 0 0-3-3z"/></svg>
+
+    </a>
+    Vlash-piper
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="./.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../integration/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Integration
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../guide/" class="md-nav__link">
+        
+  
+  
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-rocket" viewBox="0 0 24 24"><path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09"/><path d="M9 12a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.4 22.4 0 0 1-4 2z"/><path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 .05 5 .05"/></svg>
+  
+  <span class="md-ellipsis">
+    
+  
+    Guide
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../integration/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Integration
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  
+                    
+                    
+                    
+                      
+                    
+                    
+                      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+                      <div class="md-sidebar-button__wrapper">
+                        <label class="md-sidebar-button" for="__toc"></label>
+                      </div>
+                    
+                  
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--secondary" aria-label="On this page">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      On this page
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#table-of-contents" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Table of Contents
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1-torchcompile-crash-on-jetson-orin-nvgpu" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. torch.compile Crash on Jetson Orin (nvgpu)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1. torch.compile Crash on Jetson Orin (nvgpu)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#symptoms" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Symptoms
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#root-cause" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Root Cause
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-hard-requirement" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Hard Requirement
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#resolution-workaround" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Resolution / Workaround
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#performance-impact" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Performance Impact
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#future-fix" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Future Fix
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-usb-camera-frame-drop-episodes-020-041-test4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. USB Camera Frame Drop — Episodes 020 &amp; 041 (test4)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. USB Camera Frame Drop — Episodes 020 &amp; 041 (test4)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#summary" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Summary
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#frame-count-analysis" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Frame Count Analysis
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mp4-file-integrity" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        MP4 File Integrity
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#file-size-paradox" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        File Size Paradox
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#why-transfer-corruption-can-be-ruled-out" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why Transfer Corruption Can Be Ruled Out
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#root-cause-camera-capture-layer-dropped-frames" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Root Cause: Camera Capture Layer Dropped Frames
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#likely-root-causes-ranked-by-probability" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Likely Root Causes (Ranked by Probability)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#modification-timestamps-confirming-normal-recording-not-transfer-issue" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Modification Timestamps (Confirming Normal Recording, Not Transfer Issue)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#immediate-actions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Immediate Actions
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fix-options" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Fix Options
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#verification-command" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Verification Command
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#code-level-hardening-recommended" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Code-Level Hardening (Recommended)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-config-mismatch-state_cond-camera-names" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Config Mismatch: state_cond / Camera Names
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. Config Mismatch: state_cond &#x2f; Camera Names">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#problem" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Problem
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#model-variants" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Model Variants
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#failure-modes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Failure Modes
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#how-to-check-before-running" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How to Check Before Running
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-integration-issues-fixed" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Integration Issues Fixed
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4. Integration Issues Fixed">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#41-keyerror-piper_follower-on-vlash-startup" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.1 KeyError: 'piper_follower' on VLASH startup
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#42-modulenotfounderror-lerobotrobotsreachy2-on-vlash-startup" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.2 ModuleNotFoundError: lerobot.robots.reachy2 on VLASH startup
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#43-importerror-cannot-import-name-obs_images-from-lerobotutilsconstants" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.3 ImportError: cannot import name 'OBS_IMAGES' from 'lerobot.utils.constants'
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#44-attributeerror-module-rerun-has-no-attribute-scalar" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.4 AttributeError: module 'rerun' has no attribute 'Scalar'
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#45-attributeerror-module-lerobotutilsvisualization_utils-has-no-attribute-init_rerun" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.5 AttributeError: module 'lerobot.utils.visualization_utils' has no attribute 'init_rerun'
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#46-pixi-pulls-official-lerobot-041-from-pypi-overwriting-lerobot_piper" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.6 pixi pulls official lerobot 0.4.1 from PyPI, overwriting lerobot_piper
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#47-no-manylinux_2_28_aarch64-wheel-for-rerun-sdk-021022" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.7 No manylinux_2_28_aarch64 wheel for rerun-sdk 0.21–0.22
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#48-transformers-version-conflict-between-smolvla-and-vlash" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.8 transformers version conflict between smolvla and VLASH
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#49-glibcxx_3430-not-found-pyarrow-crash" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.9 GLIBCXX_3.4.30 not found pyarrow crash
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-dependency-risks-on-aarch64" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Dependency Risks on aarch64
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+                
+
+
+
+  
+
+
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+<h1 id="problems-diagnostics-fixes-log">Problems, Diagnostics &amp; Fixes Log<a class="headerlink" href="#problems-diagnostics-fixes-log" title="Permanent link">&para;</a></h1>
+<p><strong>Project:</strong> VLASH + Piper on Jetson AGX Orin<br />
+<strong>Repository:</strong> <a href="https://github.com/Alvin0523/vlash-piper">Alvin0523/vlash-piper</a><br />
+<strong>Last Updated:</strong> 2026-05-04</p>
+<p>This document is the running log of every problem hit during integration, recording, training, and inference — with root cause analysis, evidence, and resolution for each.</p>
+<hr />
+<h2 id="table-of-contents">Table of Contents<a class="headerlink" href="#table-of-contents" title="Permanent link">&para;</a></h2>
+<ol>
+<li><a href="#1-torchcompile-crash-on-jetson-orin-nvgpu">torch.compile Crash on Jetson Orin (nvgpu)</a></li>
+<li><a href="#2-usb-camera-frame-drop--episodes-020--041-test4">USB Camera Frame Drop — Episodes 020 &amp; 041 (test4)</a></li>
+<li><a href="#3-config-mismatch-state_cond--camera-names">Config Mismatch: state_cond / Camera Names</a></li>
+<li><a href="#4-integration-issues-fixed">Integration Issues Fixed</a></li>
+<li><a href="#5-dependency-risks-on-aarch64">Dependency Risks on aarch64</a></li>
+</ol>
+<hr />
+<h2 id="1-torchcompile-crash-on-jetson-orin-nvgpu">1. torch.compile Crash on Jetson Orin (nvgpu)<a class="headerlink" href="#1-torchcompile-crash-on-jetson-orin-nvgpu" title="Permanent link">&para;</a></h2>
+<p><strong>Status:</strong> Known limitation — no fix available. Workaround: use sync mode only.<br />
+<strong>Affects:</strong> Async inference, <code>compile_model: true</code><br />
+<strong>Discovered:</strong> During first async inference attempt on Jetson</p>
+<h3 id="symptoms">Symptoms<a class="headerlink" href="#symptoms" title="Permanent link">&para;</a></h3>
+<p>Running <code>pixi run infer-async</code> (which has <code>compile_model: true</code>) crashes immediately with cuBLAS or cuDNN errors before any inference runs. The crash happens during model compilation, not during forward pass.</p>
+<h3 id="root-cause">Root Cause<a class="headerlink" href="#root-cause" title="Permanent link">&para;</a></h3>
+<p>Jetson Orin AGX uses NVIDIA's <strong>nvgpu</strong> driver — a custom GPU driver for integrated SoCs, fundamentally different from the discrete GPU driver used by desktop GPUs (RTX series, etc.).</p>
+<p>The nvgpu driver has incomplete support for:
+- <code>torch.compile</code>'s Triton backend (generates PTX that triggers nvgpu-specific cuDNN/cuBLAS path validation issues)
+- The <code>inductor</code> compilation backend that PyTorch 2.x uses by default
+- The full CUDA graph capture API surface that <code>torch.compile</code> relies on</p>
+<p>When <code>compile_model: true</code> is set, VLASH calls <code>torch.compile(model)</code> which triggers a cuDNN graph capture. On nvgpu, this fails because the driver does not implement the required graph API calls.</p>
+<p>Desktop GPUs (RTX 3090, 4090, 5090, etc.) use the standard NVIDIA driver which fully supports <code>torch.compile</code> and the Triton backend. This is why VLASH works fine on a desktop workstation but crashes on Jetson.</p>
+<h3 id="the-hard-requirement">The Hard Requirement<a class="headerlink" href="#the-hard-requirement" title="Permanent link">&para;</a></h3>
+<p>VLASH enforces this check in <code>run_config.py</code>:</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">inference_overlap_steps</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="ow">and</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">policy</span><span class="o">.</span><span class="n">compile_model</span><span class="p">:</span>
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>        <span class="s2">&quot;When inference_overlap_steps &gt; 0, policy.compile_model must be True. &quot;</span>
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>        <span class="s2">&quot;Async inference requires compiled model for CPU overlapping.&quot;</span>
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>    <span class="p">)</span>
+</span></code></pre></div>
+<p><strong>Async inference requires <code>compile_model: true</code> — no way around this.</strong> Since <code>compile_model: true</code> crashes on Jetson, async inference is permanently unavailable on Jetson Orin.</p>
+<h3 id="resolution-workaround">Resolution / Workaround<a class="headerlink" href="#resolution-workaround" title="Permanent link">&para;</a></h3>
+<p>Always use sync mode on Jetson Orin:</p>
+<div class="language-yaml highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="c1"># In any inference YAML</span>
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="nt">compile_model</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span>
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="nt">inference_overlap_steps</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0</span>
+</span></code></pre></div>
+<p>Use <code>vlash/examples/inference/sync_piper.yaml</code> which already has both set correctly.</p>
+<p>The <code>async_piper.yaml</code> config has <code>compile_model: true</code> — <strong>do not use it on Jetson</strong>.</p>
+<h3 id="performance-impact">Performance Impact<a class="headerlink" href="#performance-impact" title="Permanent link">&para;</a></h3>
+<p>Without <code>torch.compile</code>, inference is slower (1.5–3× vs compiled). This is partially compensated by:
+- <code>fuse_qkv: true</code> — fuses Q/K/V projection kernels in attention
+- <code>fuse_gate_up: true</code> — fuses gate/up projections in SwiGLU FFN layers
+- Running the Jetson in max performance mode: <code>sudo nvpmodel -m 0 &amp;&amp; sudo jetson_clocks</code></p>
+<h3 id="future-fix">Future Fix<a class="headerlink" href="#future-fix" title="Permanent link">&para;</a></h3>
+<p>This will be resolved if NVIDIA adds full <code>torch.compile</code> / CUDA graph support to the nvgpu driver in a future JetPack release. No timeline is known.</p>
+<hr />
+<h2 id="2-usb-camera-frame-drop-episodes-020-041-test4">2. USB Camera Frame Drop — Episodes 020 &amp; 041 (test4)<a class="headerlink" href="#2-usb-camera-frame-drop-episodes-020-041-test4" title="Permanent link">&para;</a></h2>
+<p><strong>Status:</strong> Root cause confirmed — episodes 020 &amp; 041 are invalid for training.<br />
+<strong>Report Date:</strong> 2026-04-28<br />
+<strong>Dataset:</strong> <code>data/test4/</code></p>
+<h3 id="summary">Summary<a class="headerlink" href="#summary" title="Permanent link">&para;</a></h3>
+<p>Episodes 020 and 041 experienced severe video frame loss during recording. Action data is complete (911 and 935 frames respectively), but video frames were reduced to only ~18% of expected (165 and 169 frames vs. 911 and 935 expected). The files are structurally valid MP4 files — the loss happened at the camera capture layer, not during encoding or transfer.</p>
+<p>Critically: <strong>this is a systemic issue, not isolated to these two episodes.</strong> Even "normal" episodes in the same dataset show only ~6 fps video capture vs. 30 fps requested, meaning all episodes are affected to varying degrees.</p>
+<h3 id="frame-count-analysis">Frame Count Analysis<a class="headerlink" href="#frame-count-analysis" title="Permanent link">&para;</a></h3>
+<p><strong>Episode 020:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Metric</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Expected frames</td>
+<td>911 @ 30 fps = 30.37 s</td>
+</tr>
+<tr>
+<td>Action frames recorded</td>
+<td>911 ✓ (complete)</td>
+</tr>
+<tr>
+<td>Video frames in mdat</td>
+<td>165 ✗ (18.1% of expected)</td>
+</tr>
+<tr>
+<td>Actual capture rate</td>
+<td>5.44 fps</td>
+</tr>
+<tr>
+<td>mdat — up camera</td>
+<td>770,361 bytes (165 frames @ 4,669 bytes/frame)</td>
+</tr>
+<tr>
+<td>mdat — wrist camera</td>
+<td>3,059,170 bytes (165 frames @ 18,540 bytes/frame)</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Episode 041:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Metric</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Expected frames</td>
+<td>935 @ 30 fps = 31.17 s</td>
+</tr>
+<tr>
+<td>Action frames recorded</td>
+<td>935 ✓ (complete)</td>
+</tr>
+<tr>
+<td>Video frames in mdat</td>
+<td>169 ✗ (18.1% of expected)</td>
+</tr>
+<tr>
+<td>Actual capture rate</td>
+<td>5.43 fps</td>
+</tr>
+<tr>
+<td>mdat — up camera</td>
+<td>1,021,986 bytes (169 frames @ 6,047 bytes/frame)</td>
+</tr>
+<tr>
+<td>mdat — wrist camera</td>
+<td>4,831,820 bytes (169 frames @ 28,591 bytes/frame)</td>
+</tr>
+</tbody>
+</table>
+<p><strong>"Normal" episodes (systemic baseline):</strong></p>
+<table>
+<thead>
+<tr>
+<th>Episode</th>
+<th>Expected</th>
+<th>Actual</th>
+<th>Duration</th>
+<th>Actual FPS</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>000</td>
+<td>594</td>
+<td>120</td>
+<td>19.77 s</td>
+<td>6.07 fps</td>
+</tr>
+<tr>
+<td>005</td>
+<td>514</td>
+<td>107</td>
+<td>17.10 s</td>
+<td>6.26 fps</td>
+</tr>
+<tr>
+<td>010</td>
+<td>563</td>
+<td>115</td>
+<td>18.73 s</td>
+<td>6.14 fps</td>
+</tr>
+<tr>
+<td><strong>020</strong></td>
+<td><strong>911</strong></td>
+<td><strong>165</strong></td>
+<td><strong>30.33 s</strong></td>
+<td><strong>5.44 fps</strong></td>
+</tr>
+<tr>
+<td><strong>041</strong></td>
+<td><strong>935</strong></td>
+<td><strong>169</strong></td>
+<td><strong>31.13 s</strong></td>
+<td><strong>5.43 fps</strong></td>
+</tr>
+</tbody>
+</table>
+<p>All episodes consistently capture ~6 fps instead of 30 fps. This is a systemic hardware/configuration issue, not an isolated software bug or transfer error.</p>
+<h3 id="mp4-file-integrity">MP4 File Integrity<a class="headerlink" href="#mp4-file-integrity" title="Permanent link">&para;</a></h3>
+<p>All four affected files were confirmed structurally valid:</p>
+<table>
+<thead>
+<tr>
+<th>File</th>
+<th>Status</th>
+<th>Structure</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ep020_up</td>
+<td>✅ Complete</td>
+<td>mdat (770,361 bytes) + moov (2,429 bytes) — complete</td>
+</tr>
+<tr>
+<td>ep020_wrist</td>
+<td>✅ Complete</td>
+<td>mdat (3,059,170 bytes) + moov (6,261 bytes) — complete</td>
+</tr>
+<tr>
+<td>ep041_up</td>
+<td>✅ Complete</td>
+<td>mdat (1,021,986 bytes) + moov (4,837 bytes) — complete</td>
+</tr>
+<tr>
+<td>ep041_wrist</td>
+<td>✅ Complete</td>
+<td>mdat (4,831,820 bytes) + moov (6,401 bytes) — complete</td>
+</tr>
+</tbody>
+</table>
+<p>All files: ftyp box present, mdat complete, moov complete, no truncation, no orphaned data, no partial data sections.</p>
+<h3 id="file-size-paradox">File Size Paradox<a class="headerlink" href="#file-size-paradox" title="Permanent link">&para;</a></h3>
+<p>Episodes 020 and 041 are <strong>larger</strong> than average, not smaller:</p>
+<table>
+<thead>
+<tr>
+<th>Episode</th>
+<th>Total Size</th>
+<th>% of Average</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>020</td>
+<td>3.66 MB</td>
+<td>144%</td>
+</tr>
+<tr>
+<td>041</td>
+<td>5.59 MB</td>
+<td>220% (+4.36 SD above mean)</td>
+</tr>
+<tr>
+<td>Average</td>
+<td>2.54 MB</td>
+<td>100%</td>
+</tr>
+</tbody>
+</table>
+<p>Explanation: larger files with fewer frames = higher bytes-per-frame, consistent with the encoder writing higher-quality keyframes when frame rate drops (fewer frames = more encoding budget per frame).</p>
+<h3 id="why-transfer-corruption-can-be-ruled-out">Why Transfer Corruption Can Be Ruled Out<a class="headerlink" href="#why-transfer-corruption-can-be-ruled-out" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Indicator</th>
+<th>Expected if Transfer Corruption</th>
+<th>Actual</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>File truncation</td>
+<td>Yes — files cut off midway</td>
+<td>✅ No — all files complete</td>
+</tr>
+<tr>
+<td>Missing moov box</td>
+<td>Yes — metadata lost first</td>
+<td>✅ No — moov present and complete</td>
+</tr>
+<tr>
+<td>Box size mismatches</td>
+<td>Yes — declared &gt; actual</td>
+<td>✅ No — all sizes match perfectly</td>
+</tr>
+<tr>
+<td>Incomplete mdat</td>
+<td>Yes — video data cut short</td>
+<td>✅ No — mdat properly closed</td>
+</tr>
+<tr>
+<td>Partial files (.tmp)</td>
+<td>Yes — visible transfer remnants</td>
+<td>✅ No — none found</td>
+</tr>
+<tr>
+<td>Files smaller than average</td>
+<td>Usually yes</td>
+<td>✅ No — files are larger than average</td>
+</tr>
+</tbody>
+</table>
+<p>Zero out of six transfer corruption indicators present. Transfer was clean.</p>
+<h3 id="root-cause-camera-capture-layer-dropped-frames">Root Cause: Camera Capture Layer Dropped Frames<a class="headerlink" href="#root-cause-camera-capture-layer-dropped-frames" title="Permanent link">&para;</a></h3>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>Robot Control:   ████████████████████ (911/911 frames)  ✓ Complete
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>Video Capture:   ███░░░░░░░░░░░░░░░░░ (165/911 frames)  ✗ Dropped 82%
+</span></code></pre></div>
+<p>The robot control loop and action recording ran at the intended rate throughout the episode. The camera capture thread dropped 82% of frames in real-time. Both processes operated independently — the control loop does not gate on camera frames.</p>
+<p><strong>The mdat boxes contain exactly the number of frames in the episode stats</strong> — proving frames were dropped during capture, not during encoding or transfer.</p>
+<h3 id="likely-root-causes-ranked-by-probability">Likely Root Causes (Ranked by Probability)<a class="headerlink" href="#likely-root-causes-ranked-by-probability" title="Permanent link">&para;</a></h3>
+<ol>
+<li><strong>USB Bandwidth Saturation</strong> — Dual RealSense cameras (USB 3.2 + USB 2.1) streaming 30 fps may exceed available USB bus bandwidth. Both cameras sharing bandwidth with other USB devices compounds this.</li>
+<li><strong>AV1 Encoding Bottleneck</strong> — AV1 is computationally expensive. The Jetson CPU likely cannot sustain dual 30 fps real-time AV1 encoding while also running the robot control loop.</li>
+<li><strong>System Resource Contention</strong> — Robot control + dual video encoding exceeds Jetson Orin real-time budget for this workload.</li>
+<li><strong>librealsense Driver Buffer Overflow</strong> — The librealsense driver's internal buffer overflows at sustained 30 fps, silently dropping frames at the driver level.</li>
+</ol>
+<h3 id="modification-timestamps-confirming-normal-recording-not-transfer-issue">Modification Timestamps (Confirming Normal Recording, Not Transfer Issue)<a class="headerlink" href="#modification-timestamps-confirming-normal-recording-not-transfer-issue" title="Permanent link">&para;</a></h3>
+<p><strong>Episode 020:</strong>
+- up camera: 2026-04-27 16:25:01
+- wrist camera: 2026-04-27 16:24:55
+- Spread: 6 seconds (normal for dual-camera recording start delay)</p>
+<p><strong>Episode 041:</strong>
+- up camera: 2026-04-27 17:01:01
+- wrist camera: 2026-04-27 17:00:48
+- Spread: 13 seconds (acceptable for dual-camera recording)</p>
+<h3 id="immediate-actions">Immediate Actions<a class="headerlink" href="#immediate-actions" title="Permanent link">&para;</a></h3>
+<ul>
+<li>✅ <strong>Do NOT re-transfer these episodes</strong> — they transferred completely; re-transfer will produce identical files</li>
+<li>❌ <strong>Do NOT use episodes 020 or 041 for training</strong> — insufficient video frame count</li>
+<li>Mark episodes 020 and 041 as invalid in dataset metadata</li>
+</ul>
+<h3 id="fix-options">Fix Options<a class="headerlink" href="#fix-options" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Option</th>
+<th>Description</th>
+<th>Trade-off</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>A: Lower FPS</strong></td>
+<td>Set cameras to <code>fps: 15</code> or resolution to 320×240</td>
+<td>Reduced visual quality; must retrain models at same fps</td>
+</tr>
+<tr>
+<td><strong>B: Separate USB bandwidth</strong></td>
+<td>Use PCIe USB expansion card; give each camera its own USB controller</td>
+<td>Hardware cost</td>
+</tr>
+<tr>
+<td><strong>C: Switch codec</strong></td>
+<td>Use H.264 instead of AV1</td>
+<td>Lower CPU encoding cost; slightly lower quality</td>
+</tr>
+<tr>
+<td><strong>D: Post-record encoding</strong></td>
+<td>Record raw frames during teleoperation, encode after episode ends</td>
+<td>Disk space; more complex pipeline</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Recommended immediate fix:</strong> Test <code>fps: 15</code> for the wrist camera (USB 2.1 port) and verify the frame count improves.</p>
+<h3 id="verification-command">Verification Command<a class="headerlink" href="#verification-command" title="Permanent link">&para;</a></h3>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="c1"># Check frame count for any episode</span>
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>ffprobe<span class="w"> </span>-v<span class="w"> </span>quiet<span class="w"> </span>-show_streams<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="w">  </span>data/&lt;dataset&gt;/videos/chunk-000/observation.images.wrist_episode_000000.mp4<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="w">  </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>nb_frames
+</span><span id="__span-3-5"><a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a>
+</span><span id="__span-3-6"><a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a><span class="c1"># Check USB bandwidth</span>
+</span><span id="__span-3-7"><a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a>lsusb<span class="w"> </span>-v<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>-A<span class="w"> </span><span class="m">5</span><span class="w"> </span><span class="s2">&quot;RealSense&quot;</span>
+</span><span id="__span-3-8"><a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a>
+</span><span id="__span-3-9"><a id="__codelineno-3-9" name="__codelineno-3-9" href="#__codelineno-3-9"></a><span class="c1"># Monitor during recording</span>
+</span><span id="__span-3-10"><a id="__codelineno-3-10" name="__codelineno-3-10" href="#__codelineno-3-10"></a>nvidia-smi<span class="w"> </span>dmon<span class="w"> </span>-s<span class="w"> </span>pucvmet
+</span></code></pre></div>
+<h3 id="code-level-hardening-recommended">Code-Level Hardening (Recommended)<a class="headerlink" href="#code-level-hardening-recommended" title="Permanent link">&para;</a></h3>
+<p>Add real-time frame drop detection to the recording script:</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="kn">import</span><span class="w"> </span><span class="nn">time</span>
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="kn">import</span><span class="w"> </span><span class="nn">logging</span>
+</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>
+</span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="n">episode_start</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+</span><span id="__span-4-5"><a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a><span class="n">frame_count</span> <span class="o">=</span> <span class="mi">0</span>
+</span><span id="__span-4-6"><a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a><span class="n">expected_fps</span> <span class="o">=</span> <span class="mi">30</span>
+</span><span id="__span-4-7"><a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a>
+</span><span id="__span-4-8"><a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a><span class="c1"># ... in capture loop:</span>
+</span><span id="__span-4-9"><a id="__codelineno-4-9" name="__codelineno-4-9" href="#__codelineno-4-9"></a><span class="n">frame_count</span> <span class="o">+=</span> <span class="mi">1</span>
+</span><span id="__span-4-10"><a id="__codelineno-4-10" name="__codelineno-4-10" href="#__codelineno-4-10"></a><span class="n">elapsed</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="n">episode_start</span>
+</span><span id="__span-4-11"><a id="__codelineno-4-11" name="__codelineno-4-11" href="#__codelineno-4-11"></a><span class="n">actual_fps</span> <span class="o">=</span> <span class="n">frame_count</span> <span class="o">/</span> <span class="n">elapsed</span> <span class="k">if</span> <span class="n">elapsed</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="k">else</span> <span class="mi">0</span>
+</span><span id="__span-4-12"><a id="__codelineno-4-12" name="__codelineno-4-12" href="#__codelineno-4-12"></a><span class="k">if</span> <span class="n">elapsed</span> <span class="o">&gt;</span> <span class="mf">2.0</span> <span class="ow">and</span> <span class="n">actual_fps</span> <span class="o">&lt;</span> <span class="n">expected_fps</span> <span class="o">*</span> <span class="mf">0.8</span><span class="p">:</span>
+</span><span id="__span-4-13"><a id="__codelineno-4-13" name="__codelineno-4-13" href="#__codelineno-4-13"></a>    <span class="n">logging</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span>
+</span><span id="__span-4-14"><a id="__codelineno-4-14" name="__codelineno-4-14" href="#__codelineno-4-14"></a>        <span class="sa">f</span><span class="s2">&quot;Frame drop detected: </span><span class="si">{</span><span class="n">actual_fps</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2"> fps vs </span><span class="si">{</span><span class="n">expected_fps</span><span class="si">}</span><span class="s2"> fps expected&quot;</span>
+</span><span id="__span-4-15"><a id="__codelineno-4-15" name="__codelineno-4-15" href="#__codelineno-4-15"></a>    <span class="p">)</span>
+</span></code></pre></div>
+<hr />
+<h2 id="3-config-mismatch-state_cond-camera-names">3. Config Mismatch: state_cond / Camera Names<a class="headerlink" href="#3-config-mismatch-state_cond-camera-names" title="Permanent link">&para;</a></h2>
+<p><strong>Status:</strong> Ongoing risk — must check manually before each inference run.<br />
+<strong>Consequence:</strong> Silent failure — arm trembles, freezes, or moves erratically with no error message.</p>
+<h3 id="problem">Problem<a class="headerlink" href="#problem" title="Permanent link">&para;</a></h3>
+<p>Different training runs used different model configurations. Attempting to run inference with a YAML config that doesn't match the model's <code>config.json</code> produces no error — the model runs with wrong inputs and produces garbage actions.</p>
+<h3 id="model-variants">Model Variants<a class="headerlink" href="#model-variants" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Model</th>
+<th><code>state_cond</code></th>
+<th>Camera names in config.json</th>
+<th>Correct inference camera names</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>test3</td>
+<td><code>true</code></td>
+<td><code>side</code></td>
+<td>Must name camera <code>side</code> in inference YAML</td>
+</tr>
+<tr>
+<td>test6</td>
+<td><code>false</code></td>
+<td><code>wrist</code>, <code>up</code></td>
+<td>Must name cameras <code>wrist</code> and <code>up</code>; no joint state fed</td>
+</tr>
+<tr>
+<td>test8</td>
+<td><code>true</code></td>
+<td><code>wrist</code>, <code>up</code></td>
+<td>Must name cameras <code>wrist</code> and <code>up</code>; joint state required</td>
+</tr>
+</tbody>
+</table>
+<h3 id="failure-modes">Failure Modes<a class="headerlink" href="#failure-modes" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Mismatch type</th>
+<th>Symptom</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Wrong camera name</td>
+<td>Camera not found → crash, or wrong camera silently fed to wrong model input</td>
+</tr>
+<tr>
+<td><code>state_cond</code> mismatch</td>
+<td>Model receives joint state it wasn't trained with → arm trembles and freezes</td>
+</tr>
+<tr>
+<td><code>n_action_steps</code> &gt; <code>chunk_size</code></td>
+<td>Index out of bounds error at runtime</td>
+</tr>
+<tr>
+<td><code>n_action_steps</code> &lt; <code>chunk_size</code></td>
+<td>Works, but only first N actions of each chunk executed</td>
+</tr>
+</tbody>
+</table>
+<h3 id="how-to-check-before-running">How to Check Before Running<a class="headerlink" href="#how-to-check-before-running" title="Permanent link">&para;</a></h3>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="c1"># Inspect model config before running inference</span>
+</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>python3<span class="w"> </span>-c<span class="w"> </span><span class="s2">&quot;</span>
+</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="s2">import json</span>
+</span><span id="__span-5-4"><a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a><span class="s2">with open(&#39;models/&lt;model&gt;/pretrained_model/config.json&#39;) as f:</span>
+</span><span id="__span-5-5"><a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a><span class="s2">    cfg = json.load(f)</span>
+</span><span id="__span-5-6"><a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a><span class="s2">print(&#39;state_cond:&#39;, cfg.get(&#39;state_cond&#39;))</span>
+</span><span id="__span-5-7"><a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a><span class="s2">print(&#39;input_features:&#39;, list(cfg.get(&#39;input_features&#39;, {}).keys()))</span>
+</span><span id="__span-5-8"><a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a><span class="s2">print(&#39;chunk_size:&#39;, cfg.get(&#39;chunk_size&#39;))</span>
+</span><span id="__span-5-9"><a id="__codelineno-5-9" name="__codelineno-5-9" href="#__codelineno-5-9"></a><span class="s2">&quot;</span>
+</span></code></pre></div>
+<p>Then verify the inference YAML:
+- Camera names in YAML match keys in <code>input_features</code>
+- <code>n_action_steps</code> ≤ <code>chunk_size</code>
+- <code>state_cond</code> in training config matches whether joint state is included in the inference robot config</p>
+<hr />
+<h2 id="4-integration-issues-fixed">4. Integration Issues Fixed<a class="headerlink" href="#4-integration-issues-fixed" title="Permanent link">&para;</a></h2>
+<p>These were all resolved during initial integration. Documented here for reference.</p>
+<h3 id="41-keyerror-piper_follower-on-vlash-startup">4.1 <code>KeyError: 'piper_follower'</code> on VLASH startup<a class="headerlink" href="#41-keyerror-piper_follower-on-vlash-startup" title="Permanent link">&para;</a></h3>
+<p><strong>Cause:</strong> draccus (lerobot's config parser) uses a type registry that is populated by importing config subclasses. <code>PiperFollowerConfig</code> was never imported, so the registry had no entry for <code>piper_follower</code>.</p>
+<p><strong>Fix:</strong> Added <code>from lerobot.robots.piper_follower import PiperFollowerConfig</code> to <code>vlash/vlash/configs/run_config.py</code>.</p>
+<h3 id="42-modulenotfounderror-lerobotrobotsreachy2-on-vlash-startup">4.2 <code>ModuleNotFoundError: lerobot.robots.reachy2</code> on VLASH startup<a class="headerlink" href="#42-modulenotfounderror-lerobotrobotsreachy2-on-vlash-startup" title="Permanent link">&para;</a></h3>
+<p><strong>Cause:</strong> VLASH's <code>run_config.py</code> imported reachy2 unconditionally at module load. lerobot_piper does not ship the reachy2 module.</p>
+<p><strong>Fix:</strong> Wrapped the import in <code>try/except ModuleNotFoundError</code>.</p>
+<h3 id="43-importerror-cannot-import-name-obs_images-from-lerobotutilsconstants">4.3 <code>ImportError: cannot import name 'OBS_IMAGES' from 'lerobot.utils.constants'</code><a class="headerlink" href="#43-importerror-cannot-import-name-obs_images-from-lerobotutilsconstants" title="Permanent link">&para;</a></h3>
+<p><strong>Cause:</strong> VLASH imports constants from <code>lerobot.utils.constants</code>. In lerobot_piper, these constants are at <code>lerobot.constants</code>.</p>
+<p><strong>Fix:</strong> Created <code>lerobot_piper/src/lerobot/utils/constants.py</code> containing <code>from lerobot.constants import *</code>.</p>
+<h3 id="44-attributeerror-module-rerun-has-no-attribute-scalar">4.4 <code>AttributeError: module 'rerun' has no attribute 'Scalar'</code><a class="headerlink" href="#44-attributeerror-module-rerun-has-no-attribute-scalar" title="Permanent link">&para;</a></h3>
+<p><strong>Cause:</strong> rerun ≥ 0.23 renamed <code>rr.Scalar</code> to <code>rr.Scalars</code>. lerobot_piper's visualization code used the old name.</p>
+<p><strong>Fix:</strong> Renamed all 4 occurrences of <code>rr.Scalar(</code> → <code>rr.Scalars(</code> in <code>visualization_utils.py</code>.</p>
+<h3 id="45-attributeerror-module-lerobotutilsvisualization_utils-has-no-attribute-init_rerun">4.5 <code>AttributeError: module 'lerobot.utils.visualization_utils' has no attribute 'init_rerun'</code><a class="headerlink" href="#45-attributeerror-module-lerobotutilsvisualization_utils-has-no-attribute-init_rerun" title="Permanent link">&para;</a></h3>
+<p><strong>Cause:</strong> VLASH imports <code>init_rerun</code> (public) but lerobot_piper only defines <code>_init_rerun</code> (private).</p>
+<p><strong>Fix:</strong> Added <code>init_rerun = _init_rerun</code> alias at the bottom of <code>visualization_utils.py</code>.</p>
+<h3 id="46-pixi-pulls-official-lerobot-041-from-pypi-overwriting-lerobot_piper">4.6 pixi pulls official lerobot 0.4.1 from PyPI, overwriting lerobot_piper<a class="headerlink" href="#46-pixi-pulls-official-lerobot-041-from-pypi-overwriting-lerobot_piper" title="Permanent link">&para;</a></h3>
+<p><strong>Cause:</strong> VLASH pins <code>lerobot==0.4.1</code>. lerobot_piper was versioned <code>0.3.3</code>, so pixi saw it as outdated and resolved to official lerobot 0.4.1 from PyPI (which has no Piper support).</p>
+<p><strong>Fix:</strong> Bumped <code>version</code> in <code>lerobot_piper/pyproject.toml</code> from <code>0.3.3</code> to <code>0.4.1</code>.</p>
+<h3 id="47-no-manylinux_2_28_aarch64-wheel-for-rerun-sdk-021022">4.7 No <code>manylinux_2_28_aarch64</code> wheel for rerun-sdk 0.21–0.22<a class="headerlink" href="#47-no-manylinux_2_28_aarch64-wheel-for-rerun-sdk-021022" title="Permanent link">&para;</a></h3>
+<p><strong>Cause:</strong> rerun-sdk versions 0.21 and 0.22 were not published with an aarch64 wheel. Pixi install fails on Jetson.</p>
+<p><strong>Fix:</strong> Changed rerun-sdk constraint from <code>&gt;=0.21.0,&lt;0.23.0</code> to <code>&gt;=0.23.0</code> in <code>lerobot_piper/pyproject.toml</code>.</p>
+<h3 id="48-transformers-version-conflict-between-smolvla-and-vlash">4.8 transformers version conflict between smolvla and VLASH<a class="headerlink" href="#48-transformers-version-conflict-between-smolvla-and-vlash" title="Permanent link">&para;</a></h3>
+<p><strong>Cause:</strong> lerobot_piper's smolvla extra pinned <code>transformers&lt;4.52.0</code>. VLASH's git-pinned transformers is ≥4.52.0. Hard conflict.</p>
+<p><strong>Fix:</strong> Removed the <code>&lt;4.52.0</code> upper bound from <code>lerobot_piper/pyproject.toml</code>, leaving <code>&gt;=4.50.3</code>.</p>
+<h3 id="49-glibcxx_3430-not-found-pyarrow-crash">4.9 <code>GLIBCXX_3.4.30 not found</code> pyarrow crash<a class="headerlink" href="#49-glibcxx_3430-not-found-pyarrow-crash" title="Permanent link">&para;</a></h3>
+<p><strong>Cause:</strong> Pixi ships its own <code>libstdc++.so.6</code> which may be an older version than what pyarrow requires. On aarch64 Jetson, this causes a GLIBCXX symbol version mismatch when pyarrow is imported.</p>
+<p><strong>Fix:</strong> <code>scripts/activate.sh</code> preloads the correct <code>libstdc++.so.6</code> from the system before any Python imports. This script runs automatically via <code>[activation]</code> in <code>pixi.toml</code>.</p>
+<hr />
+<h2 id="5-dependency-risks-on-aarch64">5. Dependency Risks on aarch64<a class="headerlink" href="#5-dependency-risks-on-aarch64" title="Permanent link">&para;</a></h2>
+<p>Known risks when running on Jetson Orin (linux-aarch64) — tracked here for future JetPack/package updates.</p>
+<table>
+<thead>
+<tr>
+<th>Package</th>
+<th>Risk</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>torch</code></td>
+<td>Requires JetPack-specific wheel</td>
+<td>Must use <code>pypi.jetson-ai-lab.io/jp6/cu126</code>. Standard PyPI torch does not have CUDA support on aarch64.</td>
+</tr>
+<tr>
+<td><code>GradScaler(device.type, ...)</code></td>
+<td>New API requires PyTorch ≥ 2.4</td>
+<td>LeRobot uses this API. VLASH does not. If LeRobot is used directly on Jetson with an older PyTorch, it will fail.</td>
+</tr>
+<tr>
+<td><code>accelerate</code></td>
+<td>Must match JetPack PyTorch</td>
+<td>If PyTorch version changes, accelerate must be updated in sync or AMP may behave incorrectly.</td>
+</tr>
+<tr>
+<td><code>bitsandbytes</code></td>
+<td>May need source compile</td>
+<td>Binaries for aarch64 are not always available; may need to build from source for new JetPack versions.</td>
+</tr>
+<tr>
+<td><code>triton</code></td>
+<td>JetPack-specific wheel required</td>
+<td>Standard PyPI triton does not work on nvgpu. Pinned to <code>3.6.0</code> from the Jetson AI Lab index.</td>
+</tr>
+<tr>
+<td><code>rerun-sdk</code></td>
+<td>aarch64 wheels missing for some versions</td>
+<td>0.21–0.22 have no aarch64 wheels. Pinned to ≥0.23.0 which has them. Check release notes before upgrading.</td>
+</tr>
+</tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+  <script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var labels=set.querySelector(".tabbed-labels");for(var tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>
+
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-circle-arrow-up" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="m16 12-4-4-4 4M12 16V8"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright &copy; 2026 The authors
+
+    </div>
+  
+  
+    Made with
+    <a href="https://zensical.org/" target="_blank" rel="noopener">
+      Zensical
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate":null,"base":"..","features":["announce.dismiss","content.code.annotate","content.code.copy","content.code.select","content.footnote.tooltips","content.tabs.link","content.tooltips","navigation.footer","navigation.indexes","navigation.instant","navigation.instant.prefetch","navigation.path","navigation.sections","navigation.top","navigation.tracking","search.highlight"],"search":"../assets/javascripts/workers/search.e2d2d235.min.js","tags":null,"translations":{"clipboard.copied":"Copied to clipboard","clipboard.copy":"Copy to clipboard","search.result.more.one":"1 more on this page","search.result.more.other":"# more on this page","search.result.none":"No matching documents","search.result.one":"1 matching document","search.result.other":"# matching documents","search.result.placeholder":"Type to start searching","search.result.term.missing":"Missing","select.version":"Select version"},"version":null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.9f55f5b1.min.js"></script>
+      
+    
+  </body>
+</html>

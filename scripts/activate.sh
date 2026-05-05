@@ -36,3 +36,8 @@ export CPATH="/usr/local/cuda-12.6/include${CPATH:+:$CPATH}"
 export PATH="/usr/local/cuda-12.6/bin${PATH:+:$PATH}"
 # Triton 3.6 does NOT search PATH for ptxas — it requires this explicit env var
 export TRITON_PTXAS_PATH=/usr/local/cuda-12.6/bin/ptxas
+
+# X11 display for pynput keyboard support and rerun viewer (Jetson runs X server on :1)
+
+# export DISPLAY=:1
+# export XAUTHORITY=/run/user/1000/gdm/Xauthority

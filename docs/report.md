@@ -1,15 +1,15 @@
 # VLASH on Piper Arm — Full Technical Reference
 
-**Project:** VLASH (MIT HAN Lab) + Piper Arm (WeGo Robotics) on Jetson AGX Orin  
-**Repository:** [Alvin0523/vlash-piper](https://github.com/Alvin0523/vlash-piper)  
-**Last Updated:** 2026-05-04  
+**Project:** VLASH (MIT HAN Lab) + Piper Arm (WeGo Robotics) on Jetson AGX Orin
+**Repository:** [Alvin0523/vlash-piper](https://github.com/Alvin0523/vlash-piper)
+**Last Updated:** 2026-05-04
 **Task:** White ball sorting (pick-and-place)
 
 ---
 
 ## Table of Contents
 
-1. [System & Hardware](#1-system--hardware)
+1. [System &amp; Hardware](#1-system--hardware)
 2. [Architecture Overview](#2-architecture-overview)
 3. [Integration — What Was Changed](integration.md)
 4. [Training Configuration](#4-training-configuration)
@@ -19,9 +19,9 @@
 8. [Camera Setup](#8-camera-setup)
 9. [Inference Configuration — Line-by-Line](#9-inference-configuration--line-by-line)
 10. [Making Sync Inference Smoother](#10-making-sync-inference-smoother)
-11. [Datasets & Models](#11-datasets--models)
+11. [Datasets &amp; Models](#11-datasets--models)
 12. [HuggingFace Repository Setup](#12-huggingface-repository-setup)
-13. [Benchmarking & Evaluation](#13-benchmarking--evaluation)
+13. [Benchmarking &amp; Evaluation](#13-benchmarking--evaluation)
 14. [Pixi Task Reference](#14-pixi-task-reference)
 
 ---
@@ -30,34 +30,34 @@
 
 ### Compute
 
-| Component | Detail |
-|---|---|
-| **Board** | NVIDIA Jetson AGX Orin Developer Kit |
-| **Unified RAM** | 64 GB LPDDR5 |
-| **GPU** | Ampere integrated (nvgpu driver) |
-| **JetPack** | 6.2.2 (L4T R36.5.0, build 2026-01-16) |
-| **CUDA** | 12.6 |
-| **OS / Arch** | Ubuntu, linux-aarch64 |
-| **Python** | 3.10 |
-| **PyTorch** | 2.11.0 (Jetson AI Lab wheel: `pypi.jetson-ai-lab.io/jp6/cu126`) |
-| **Torchvision** | 0.26.0 |
-| **Torchcodec** | 0.10.0 |
-| **Triton** | 3.6.0 |
+| Component             | Detail                                                           |
+| --------------------- | ---------------------------------------------------------------- |
+| **Board**       | NVIDIA Jetson AGX Orin Developer Kit                             |
+| **Unified RAM** | 64 GB LPDDR5                                                     |
+| **GPU**         | Ampere integrated (nvgpu driver)                                 |
+| **JetPack**     | 6.2.2 (L4T R36.5.0, build 2026-01-16)                            |
+| **CUDA**        | 12.6                                                             |
+| **OS / Arch**   | Ubuntu, linux-aarch64                                            |
+| **Python**      | 3.10                                                             |
+| **PyTorch**     | 2.11.0 (Jetson AI Lab wheel:`pypi.jetson-ai-lab.io/jp6/cu126`) |
+| **Torchvision** | 0.26.0                                                           |
+| **Torchcodec**  | 0.10.0                                                           |
+| **Triton**      | 3.6.0                                                            |
 
 ### Robot
 
-| Component | Detail |
-|---|---|
-| **Robot arm** | Piper (WeGo Robotics), 6-DOF |
-| **Communication** | CAN bus — `can2` (follower), `can3` (leader) |
-| **SDK** | `piper-sdk >= 0.4.1`, `wego-piper >= 0.0.2` |
+| Component               | Detail                                           |
+| ----------------------- | ------------------------------------------------ |
+| **Robot arm**     | Piper (WeGo Robotics), 6-DOF                     |
+| **Communication** | CAN bus —`can2` (follower), `can3` (leader) |
+| **SDK**           | `piper-sdk >= 0.4.1`, `wego-piper >= 0.0.2`  |
 
 ### Cameras
 
-| Camera | Serial | Bus | Max FPS | Mount |
-|---|---|---|---|---|
-| Wrist | `348122073292` | USB 2.1 | 15 fps reliable | Back of forearm, angled 30–45° downward |
-| Overhead | `048322071496` | USB 3.2 | 30 fps | ~50 cm above table, offset to non-arm side |
+| Camera   | Serial           | Bus     | Max FPS         | Mount                                      |
+| -------- | ---------------- | ------- | --------------- | ------------------------------------------ |
+| Wrist    | `348122073292` | USB 2.1 | 15 fps reliable | Back of forearm, angled 30–45° downward  |
+| Overhead | `048322071496` | USB 3.2 | 30 fps          | ~50 cm above table, offset to non-arm side |
 
 Both cameras: Intel RealSense, 640×480 resolution.
 
@@ -89,6 +89,7 @@ The model is fine-tuned using **bfloat16** mixed precision. The Jetson Orin AGX 
 VLASH (MIT HAN Lab) is the training and inference framework wrapping PI0.5. Its key contribution over standard LeRobot-style training is **Temporal Delay Augmentation (TDA)**: training the model to be robust to stale observations, enabling true asynchronous inference where the next chunk is pre-computed while the current chunk is executing.
 
 The VLASH framework provides:
+
 - A custom dataset class (`VLASHDataset`) that injects random observation delays during training
 - An async inference loop that overlaps GPU computation with robot execution
 - LoRA fine-tuning support with automatic checkpoint merging
@@ -97,6 +98,7 @@ The VLASH framework provides:
 ### Piper + LeRobot
 
 The Piper arm is controlled through WeGo Robotics' `lerobot_piper` fork. It provides:
+
 - `PiperFollowerConfig` and `PiperFollower` robot class with CAN driver
 - `PiperMotorsBus` for joint state read/write over CAN
 - Integration with lerobot's teleop and data recording pipeline
@@ -105,7 +107,7 @@ This repo (`vlash-piper`) combines VLASH, lerobot_piper, and custom integration 
 
 ---
 
-## 3. Integration — What Was Changed
+## 3. Integration — What Was Changed(NO NEED)
 
 Four code changes were required to make VLASH work with lerobot_piper on Jetson Orin. None of these touch VLASH's core logic or the robot driver — they are all compatibility shims.
 
@@ -113,11 +115,11 @@ Four code changes were required to make VLASH work with lerobot_piper on Jetson 
 
 Three line changes:
 
-| Field | Before | After | Why |
-|---|---|---|---|
-| `version` | `0.3.3` | `0.4.1` | VLASH pins `lerobot==0.4.1`. Without the bump, pixi resolves to official lerobot 0.4.1 from PyPI (no Piper support), overwriting lerobot_piper. |
-| `rerun-sdk` | `>=0.21.0,<0.23.0` | `>=0.23.0` | Versions 0.21–0.22 have no `manylinux_2_28_aarch64` wheels — the package is simply absent for Jetson Orin's architecture. |
-| `transformers` | `>=4.50.3,<4.52.0` | `>=4.50.3` | VLASH's git-pinned transformers is ≥4.52.0. The upper bound caused a hard dependency conflict. Removing it lets both coexist. |
+| Field            | Before               | After        | Why                                                                                                                                               |
+| ---------------- | -------------------- | ------------ | ------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `version`      | `0.3.3`            | `0.4.1`    | VLASH pins `lerobot==0.4.1`. Without the bump, pixi resolves to official lerobot 0.4.1 from PyPI (no Piper support), overwriting lerobot_piper. |
+| `rerun-sdk`    | `>=0.21.0,<0.23.0` | `>=0.23.0` | Versions 0.21–0.22 have no `manylinux_2_28_aarch64` wheels — the package is simply absent for Jetson Orin's architecture.                     |
+| `transformers` | `>=4.50.3,<4.52.0` | `>=4.50.3` | VLASH's git-pinned transformers is ≥4.52.0. The upper bound caused a hard dependency conflict. Removing it lets both coexist.                    |
 
 ### 3.2 `lerobot_piper/src/lerobot/utils/constants.py` (new file)
 
@@ -132,12 +134,14 @@ VLASH imports `OBS_IMAGES`, `ACTION`, `OBS_STATE` from `lerobot.utils.constants`
 Two changes:
 
 **Added at the bottom of the file:**
+
 ```python
 init_rerun = _init_rerun
 ```
+
 VLASH imports `init_rerun` (public name) but lerobot_piper only defines `_init_rerun` (private name). Adding this alias means VLASH's import works without changing either package's internal naming.
 
-**Renamed all 4 occurrences of `rr.Scalar(` → `rr.Scalars(`**  
+**Renamed all 4 occurrences of `rr.Scalar(` → `rr.Scalars(`**
 rerun ≥ 0.23 renamed the `rr.Scalar` API to `rr.Scalars`. Without this fix, running with `display_data: true` crashes immediately with `AttributeError: module 'rerun' has no attribute 'Scalar'`.
 
 ### 3.4 `vlash/vlash/configs/run_config.py`
@@ -145,18 +149,22 @@ rerun ≥ 0.23 renamed the `rr.Scalar` API to `rr.Scalars`. Without this fix, ru
 Two changes:
 
 **Added import:**
+
 ```python
 from lerobot.robots.piper_follower import PiperFollowerConfig  # noqa: F401
 ```
+
 draccus (lerobot's config parser) requires all robot config subclasses to be imported before YAML parsing begins. Without this import, setting `type: piper_follower` in any YAML raises `KeyError: 'piper_follower'` immediately — the type registry is empty.
 
 **Wrapped reachy2 import in try/except:**
+
 ```python
 try:
     from lerobot.robots.reachy2 import Reachy2RobotConfig  # noqa: F401
 except ModuleNotFoundError:
     pass
 ```
+
 lerobot_piper does not ship the reachy2 robot module. The bare import in VLASH crashed on startup even when not using reachy2 — because the import happens at module load time, before any config is parsed.
 
 ### 3.5 `pixi.toml` (new file)
@@ -177,26 +185,26 @@ A single Pixi environment that resolves all conflicts between lerobot_piper and 
 
 These settings are the same across all training modes (async LoRA, sync, sync LoRA):
 
-| Parameter | Value | Notes |
-|---|---|---|
-| **Steps** | 50,000 | Reasonable for pick-and-place. Underfitting < 20k makes arm uncertain; overfitting on small datasets > 60k makes it brittle. |
-| **Batch size** | 16 | |
-| **Optimizer** | AdamW | |
-| **Learning rate** | 5.0e-5 | Proven value from VLASH paper. Do not increase. If loss diverges, halve it. |
-| **LR betas** | [0.9, 0.95] | |
-| **Weight decay** | 1.0e-10 | |
-| **Scheduler** | Cosine decay with warmup | |
-| **Warmup steps** | 1,000 | Do not reduce. PI0.5's LM backbone is highly LR-sensitive; skipping warmup causes divergence in the first few hundred steps. |
-| **Peak LR** | 5.0e-5 | |
-| **Decay LR** | 2.5e-6 | |
-| **dtype** | bfloat16 | Natively supported on Orin Ampere. Do not change to float32. |
-| **state_cond** | true | Joint state fed as extra conditioning input. Must match between training and inference. |
-| **Checkpoint freq** | Every 5,000 steps | |
-| **Video backend** | torchcodec | |
-| **Workers** | 4 | |
-| **Seed** | 1000 | |
+| Parameter                 | Value                    | Notes                                                                                                                        |
+| ------------------------- | ------------------------ | ---------------------------------------------------------------------------------------------------------------------------- |
+| **Steps**           | 50,000                   | Reasonable for pick-and-place. Underfitting < 20k makes arm uncertain; overfitting on small datasets > 60k makes it brittle. |
+| **Batch size**      | 16                       |                                                                                                                              |
+| **Optimizer**       | AdamW                    |                                                                                                                              |
+| **Learning rate**   | 5.0e-5                   | Proven value from VLASH paper. Do not increase. If loss diverges, halve it.                                                  |
+| **LR betas**        | [0.9, 0.95]              |                                                                                                                              |
+| **Weight decay**    | 1.0e-10                  |                                                                                                                              |
+| **Scheduler**       | Cosine decay with warmup |                                                                                                                              |
+| **Warmup steps**    | 1,000                    | Do not reduce. PI0.5's LM backbone is highly LR-sensitive; skipping warmup causes divergence in the first few hundred steps. |
+| **Peak LR**         | 5.0e-5                   |                                                                                                                              |
+| **Decay LR**        | 2.5e-6                   |                                                                                                                              |
+| **dtype**           | bfloat16                 | Natively supported on Orin Ampere. Do not change to float32.                                                                 |
+| **state_cond**      | true                     | Joint state fed as extra conditioning input. Must match between training and inference.                                      |
+| **Checkpoint freq** | Every 5,000 steps        |                                                                                                                              |
+| **Video backend**   | torchcodec               |                                                                                                                              |
+| **Workers**         | 4                        |                                                                                                                              |
+| **Seed**            | 1000                     |                                                                                                                              |
 
-### 4.2 Async + LoRA Training
+### 4.2 Async + LoRA Training  (Use table )
 
 ```yaml
 # vlash/examples/train/pi05/async_lora_piper.yaml
@@ -267,6 +275,7 @@ Pixi task: `pixi run train-pi05-sync-lora`
 ### 5.1 The Core Problem Async Solves
 
 In sync inference:
+
 1. Execute all 50 actions from the current chunk (~1.67 s)
 2. **Pause** while GPU runs inference for the next chunk (~200–500 ms)
 3. Execute the next 50 actions
@@ -274,11 +283,13 @@ In sync inference:
 The pause at step 2 is visible as the arm freezing between action chunks. The policy also uses an observation that is up to 50 steps old by the time it finishes executing the chunk — its view of the world is stale.
 
 In async inference:
+
 - At action step 42 of the current 50-step chunk, inference starts for the next chunk **in parallel**
 - By the time action step 50 finishes, the next chunk is already computed
 - The arm never pauses; motion is continuous
 
 The `inference_overlap_steps` parameter controls when the pre-computation starts:
+
 ```
 n_action_steps=50, inference_overlap_steps=8:
   Steps 0–41: execute actions normally
@@ -295,7 +306,9 @@ A sync-trained model cannot do this — it was trained on `(obs_t → actions_t.
 
 VLASH's Temporal Delay Augmentation (TDA) solves this by training the model to handle delayed observations:
 
-$$\text{sample} = (\text{obs}_{t},\ \text{delay}=d,\ \text{actions}_{t+d \ldots t+d+49})$$
+$$
+\text{sample} = (\text{obs}_{t},\ \text{delay}=d,\ \text{actions}_{t+d \ldots t+d+49})
+$$
 
 where $d$ is sampled uniformly from $[0, \texttt{max\_delay\_steps}]$ for each training example.
 
@@ -305,42 +318,19 @@ The model learns: "I'm seeing an observation from $d$ steps ago — the arm has 
 
 When `shared_observation: true`, instead of running a separate forward pass for each delay value (0, 1, ..., 8) per batch, VLASH runs the vision-language backbone **once** and applies custom attention masks to produce all delay outputs in a single forward pass. This gives approximately `(max_delay_steps + 1)`× training throughput improvement.
 
-### 5.4 The Jetson Constraint
+### 5.4 Comparison Table
 
-Async inference requires `compile_model: true`:
-
-```python
-# From run_config.py — this is a hard runtime check
-if self.inference_overlap_steps > 0 and not self.policy.compile_model:
-    raise ValueError(
-        "When inference_overlap_steps > 0, policy.compile_model must be True. "
-        "Async inference requires compiled model for CPU overlapping."
-    )
-```
-
-`torch.compile` crashes on Jetson Orin's nvgpu driver. Therefore, **async inference cannot run on Jetson Orin**.
-
-**On Jetson Orin, you are locked to sync mode:**
-```yaml
-compile_model: false
-inference_overlap_steps: 0
-```
-
-See [problems.md](problems.md) for the full crash analysis.
-
-### 5.5 Comparison Table
-
-| Aspect | Sync | Async |
-|---|---|---|
-| `inference_overlap_steps` | `0` | `> 0` (e.g. 8) |
-| `compile_model` | `false` | `true` (required) |
-| `max_delay_steps` (training) | `0` | `> 0` (e.g. 8) |
-| `shared_observation` (training) | not set | `true` |
-| Dataset type | Standard `LeRobotDataset` | `VLASHDataset` with TDA |
-| What the model learns | Actions from current observation | Actions from stale observation (up to N steps old) |
-| Arm behavior at chunk boundary | **Pauses** while GPU infers | **Continuous** — next chunk pre-computed |
-| Works on Jetson Orin | **Yes** | **No** (compile crash) |
-| Works on desktop GPU (RTX, etc.) | Yes | Yes |
+| Aspect                            | Sync                              | Async                                              |
+| --------------------------------- | --------------------------------- | -------------------------------------------------- |
+| `inference_overlap_steps`       | `0`                             | `> 0` (e.g. 8)                                   |
+| `compile_model`                 | `false`                         | `true` (required)                                |
+| `max_delay_steps` (training)    | `0`                             | `> 0` (e.g. 8)                                   |
+| `shared_observation` (training) | not set                           | `true`                                           |
+| Dataset type                      | Standard `LeRobotDataset`       | `VLASHDataset` with TDA                          |
+| What the model learns             | Actions from current observation  | Actions from stale observation (up to N steps old) |
+| Arm behavior at chunk boundary    | **Pauses** while GPU infers | **Continuous** — next chunk pre-computed    |
+| Works on Jetson Orin              | **Yes**                     | **No** (compile crash)                       |
+| Works on desktop GPU (RTX, etc.)  | Yes                               | Yes                                                |
 
 ---
 
@@ -350,20 +340,21 @@ See [problems.md](problems.md) for the full crash analysis.
 
 ### 6.1 Top-Level Architecture Differences
 
-| Dimension | LeRobot `train.py` | VLASH `train.py` |
-|---|---|---|
-| Lines | 301 | 634 |
-| Distributed training | Single GPU only | `Accelerator` — supports multi-GPU |
-| Mixed precision (AMP) | Manual `GradScaler` + `torch.autocast` | `accelerator.autocast()` — automatic |
-| Gradient accumulation | Not supported | `grad_accum_steps` |
-| Dataset | Standard `LeRobotDataset` | Custom `VLASHDataset` with temporal delay augmentation |
-| LoRA | Not supported | Full LoRA support; auto-merge at checkpoint |
-| Auto-resume | Manual `--resume` flag | `auto_resume()` — auto-detects latest checkpoint |
-| In-loop sim eval | Yes (`eval_policy` inside training loop) | No (moved to external eval script) |
+| Dimension             | LeRobot `train.py`                       | VLASH `train.py`                                       |
+| --------------------- | ------------------------------------------ | -------------------------------------------------------- |
+| Lines                 | 301                                        | 634                                                      |
+| Distributed training  | Single GPU only                            | `Accelerator` — supports multi-GPU                    |
+| Mixed precision (AMP) | Manual `GradScaler` + `torch.autocast` | `accelerator.autocast()` — automatic                  |
+| Gradient accumulation | Not supported                              | `grad_accum_steps`                                     |
+| Dataset               | Standard `LeRobotDataset`                | Custom `VLASHDataset` with temporal delay augmentation |
+| LoRA                  | Not supported                              | Full LoRA support; auto-merge at checkpoint              |
+| Auto-resume           | Manual `--resume` flag                   | `auto_resume()` — auto-detects latest checkpoint      |
+| In-loop sim eval      | Yes (`eval_policy` inside training loop) | No (moved to external eval script)                       |
 
 ### 6.2 `update_policy` Function Signatures
 
 **LeRobot:**
+
 ```python
 def update_policy(
     train_metrics, policy, batch, optimizer,
@@ -376,6 +367,7 @@ def update_policy(
 ```
 
 **VLASH:**
+
 ```python
 def update_policy(
     train_metrics, policy, batch, optimizer,
@@ -393,12 +385,14 @@ def update_policy(
 ### 6.3 Forward Pass
 
 **LeRobot:**
+
 ```python
 with torch.autocast(device_type=device.type) if use_amp else nullcontext():
     loss, output_dict = policy.forward(batch)
 ```
 
 **VLASH:**
+
 ```python
 with accelerator.autocast():
     loss, output_dict = policy.forward(batch)
@@ -413,6 +407,7 @@ VLASH saves `raw_loss` separately so the logged loss value is always the unscale
 The most significant difference.
 
 **LeRobot (explicit GradScaler):**
+
 ```python
 # 1. Scale loss to prevent fp16 underflow
 grad_scaler.scale(loss).backward()
@@ -431,6 +426,7 @@ optimizer.zero_grad()
 ```
 
 **VLASH (Accelerator-wrapped, equivalent behavior):**
+
 ```python
 # 1. accelerator.backward wraps GradScaler.scale().backward() internally
 accelerator.backward(loss)
@@ -461,26 +457,29 @@ VLASH's Accelerator encapsulates this entire flow; LeRobot exposes it explicitly
 
 ### 6.5 Behavioral Differences Summary
 
-| Behavior | LeRobot | VLASH |
-|---|---|---|
-| AMP activation | `use_amp` config flag | Accelerator config |
-| `unscale_` timing | Explicit, before clip | Auto, inside `clip_grad_norm_` |
-| inf/NaN skip | `grad_scaler.step` handles | Accelerator's optimizer handles |
-| Loss logged | `loss.item()` (may be loss-scaled) | `raw_loss.item()` (always unscaled) |
-| Gradient clipping | Unconditional | Only when `grad_clip_norm > 0` |
-| Gradient accumulation | Not supported | `loss_scale = 1/grad_accum_steps` |
+| Behavior              | LeRobot                              | VLASH                                 |
+| --------------------- | ------------------------------------ | ------------------------------------- |
+| AMP activation        | `use_amp` config flag              | Accelerator config                    |
+| `unscale_` timing   | Explicit, before clip                | Auto, inside `clip_grad_norm_`      |
+| inf/NaN skip          | `grad_scaler.step` handles         | Accelerator's optimizer handles       |
+| Loss logged           | `loss.item()` (may be loss-scaled) | `raw_loss.item()` (always unscaled) |
+| Gradient clipping     | Unconditional                        | Only when `grad_clip_norm > 0`      |
+| Gradient accumulation | Not supported                        | `loss_scale = 1/grad_accum_steps`   |
 
 ### 6.6 VLASHDataset vs LeRobotDataset
 
 **LeRobot:**
+
 ```python
 dataset = make_dataset(cfg)  # standard LeRobotDataset
 ```
+
 Returns `(obs_t, actions_{t..t+49})` — always fresh observation.
 
 **VLASH:**
 
 `VLASHDataset` implements Temporal Delay Augmentation:
+
 ```
 chunk_size = 50, max_delay_steps = 8
 
@@ -511,13 +510,13 @@ LeRobot has no LoRA support — every checkpoint saves the full model weights. V
 
 ### 6.8 Dependency Risk on aarch64 (Jetson)
 
-| Package | LeRobot | VLASH | aarch64 Risk |
-|---|---|---|---|
-| `torch` (JetPack) | Shared | Shared | Requires JetPack-specific wheel |
-| `GradScaler(device.type, ...)` | Uses new API | Not used | LeRobot at risk if PyTorch < 2.4 |
-| `shutup` | Depends on | Not used | Extra install needed |
-| `accelerate` | No dependency | Depends on | Must match JetPack PyTorch version |
-| `bitsandbytes` | No | Indirect | May need source compile on aarch64 |
+| Package                          | LeRobot       | VLASH      | aarch64 Risk                       |
+| -------------------------------- | ------------- | ---------- | ---------------------------------- |
+| `torch` (JetPack)              | Shared        | Shared     | Requires JetPack-specific wheel    |
+| `GradScaler(device.type, ...)` | Uses new API  | Not used   | LeRobot at risk if PyTorch < 2.4   |
+| `shutup`                       | Depends on    | Not used   | Extra install needed               |
+| `accelerate`                   | No dependency | Depends on | Must match JetPack PyTorch version |
+| `bitsandbytes`                 | No            | Indirect   | May need source compile on aarch64 |
 
 ---
 
@@ -546,6 +545,7 @@ Guide the object all the way to the target and release. Do not stop halfway and 
 
 **Verify the episode visually before saving.**
 Check `data/<dataset>/videos/` after each episode. Delete any episode where:
+
 - The arm bumped the table or objects
 - The object was dropped or slipped
 - The camera view was blocked
@@ -555,6 +555,7 @@ Check `data/<dataset>/videos/` after each episode. Delete any episode where:
 The VLA backbone is vision-heavy. Changes in lighting between recording sessions confuse the model. Record all episodes in identical lighting conditions to deployment.
 
 **Record both sub-steps clearly:**
+
 1. Approach and grasp the object
 2. Transport and place at the target
 
@@ -585,12 +586,14 @@ A distribution mismatch is fine if intentional (for generalization), problematic
 The arm's starting position is part of the observation the model conditions on. If the arm starts from different positions across episodes, the model cannot learn a clean "beginning of task" state.
 
 **Recommended home position:**
+
 1. Joints 1–4 (shoulder/elbow): extended forward, slightly above table height, hovering above the pick zone — not resting on the table.
 2. Joints 5–6 (wrist): neutral, gripper pointing straight down.
 3. Gripper: fully open.
 4. Clear gap (~5–10 cm) between gripper and the pick object.
 
 To find and save your exact home joint angles:
+
 ```bash
 pixi run teleop
 # drive to home position; read joint state from terminal output
@@ -659,16 +662,19 @@ Reference: `vlash/examples/inference/sync_piper.yaml` (the working Jetson config
 robot:
   type: piper_follower
 ```
+
 Tells draccus (lerobot's config parser) to instantiate `PiperFollowerConfig`. This type must be imported in `run_config.py` before YAML parsing — see [Section 3.4](#34-vlashvlashconfigsrun_configpy).
 
 ```yaml
   port: can2
 ```
+
 Which CAN interface the follower arm is on. `can2` = follower, `can3` = leader. Swapping these sends inference commands to the leader arm.
 
 ```yaml
   id: follower
 ```
+
 Logical name used internally by lerobot for multi-arm setups.
 
 ```yaml
@@ -680,6 +686,7 @@ Logical name used internally by lerobot for multi-arm setups.
       height: 480
       fps: 30
 ```
+
 Camera named `wrist`. The name must exactly match what the model was trained with. `serial_number_or_name` uniquely identifies the physical device — without it, lerobot picks whichever camera it finds first. PI0.5 internally resizes images before the vision encoder, so 640×480 is just the capture resolution. Set `fps: 15` if USB 2.1 is dropping frames.
 
 ```yaml
@@ -690,6 +697,7 @@ Camera named `wrist`. The name must exactly match what the model was trained wit
       height: 480
       fps: 30
 ```
+
 Camera named `up` (overhead). USB 3.2, genuine 30 fps achievable.
 
 ### 9.2 Policy Block
@@ -698,27 +706,32 @@ Camera named `up` (overhead). USB 3.2, genuine 30 fps achievable.
 policy:
   path: models/sync_test8/pretrained_model
 ```
+
 Path to the checkpoint directory (containing `config.json` + `model.safetensors`). Resolved relative to the working directory where you run `vlash run`. From `~/vlash_piper` this resolves correctly.
 
 ```yaml
   n_action_steps: 50
 ```
+
 **Critical.** How many actions from the model's 50-step chunk are actually executed. Must match the model's `chunk_size` in `config.json` (both are 50 here). Setting this lower than `chunk_size` is valid and can reduce chunk-boundary jerkiness (executes only the first N steps of each chunk). Setting it higher than `chunk_size` causes an index out-of-bounds error.
 
 ```yaml
   compile_model: false
 ```
+
 **Must be `false` on Jetson Orin.** See [Section 5.4](#54-the-jetson-constraint) and [problems.md](problems.md).
 
 ```yaml
   device: cuda
 ```
+
 Run on the Jetson's GPU. `cpu` is valid but ~10× slower.
 
 ```yaml
   fuse_qkv: true
   fuse_gate_up: true
 ```
+
 Kernel fusions for attention (Q/K/V) and SwiGLU FFN (gate/up) layers. Reduces memory bandwidth and speeds up inference. Safe to keep `true` on all hardware; does not change model outputs.
 
 ### 9.3 Task String
@@ -726,6 +739,7 @@ Kernel fusions for attention (Q/K/V) and SwiGLU FFN (gate/up) layers. Reduces me
 ```yaml
 single_task: "white ball sorting"
 ```
+
 The natural-language instruction passed to PI0.5's language backbone at every inference step. **Must match the phrasing used during data recording.** PI0.5 after fine-tuning is specialized to the phrasing it saw in training — it is not a general instruction-following model. Changing wording can degrade performance.
 
 ### 9.4 Control Parameters
@@ -733,11 +747,13 @@ The natural-language instruction passed to PI0.5's language backbone at every in
 ```yaml
 fps: 30
 ```
+
 Target control loop frequency. If inference takes longer than 1/30 s ≈ 33 ms (expected in sync mode on Jetson), the loop runs slower than 30 Hz. This is normal.
 
 ```yaml
 control_time_s: 600
 ```
+
 Total wall-clock seconds to run before auto-stopping. Set to a shorter value (e.g. 30) when testing to avoid runaway long sessions.
 
 ### 9.5 Visualization and Feedback
@@ -745,11 +761,13 @@ Total wall-clock seconds to run before auto-stopping. Set to a shorter value (e.
 ```yaml
 display_data: false
 ```
+
 Opens a rerun viewer showing live camera feeds and joint state. If running over SSH without X forwarding, **must be `false`** — otherwise the process hangs waiting for a display.
 
 ```yaml
 play_sounds: true
 ```
+
 Audio beeps for episode start/end/error. Set to `false` when running headless.
 
 ### 9.6 Action Quantization
@@ -757,7 +775,9 @@ Audio beeps for episode start/end/error. Set to `false` when running headless.
 ```yaml
 action_quant_ratio: 1
 ```
+
 How many control ticks each action step is held for:
+
 - `1` = every action sent to arm at the control rate (normal)
 - `2` = each action held for 2 ticks, arm moves at half speed
 - Higher = slower arm, fewer inferences needed per unit time
@@ -769,7 +789,8 @@ How many control ticks each action step is held for:
 ```yaml
 inference_overlap_steps: 0
 ```
-`0` = sync mode: play all 50 actions, pause, run inference, play next 50.  
+
+`0` = sync mode: play all 50 actions, pause, run inference, play next 50.
 `> 0` = async mode: requires `compile_model: true`, which crashes on Jetson.
 
 ### 9.8 Async Inference Config (for reference — not usable on Jetson)
@@ -811,7 +832,7 @@ policy:
 
 With 25 steps at 30 Hz you infer every ~0.83 s instead of every ~1.67 s. The pause duration is the same absolute time, but happens more frequently with fresher observations and shorter committed trajectories, so errors are corrected faster.
 
-**Trade-off:** More GPU utilization. Monitor thermal throttling with `sudo tegrastats`.  
+**Trade-off:** More GPU utilization. Monitor thermal throttling with `sudo tegrastats`.
 **Tuning:** Try `n_action_steps: 25` first. If smoother, try `20`. Do not go below `10` — inference setup overhead becomes significant.
 
 ### Strategy 2: Maximize Jetson Performance Mode
@@ -834,6 +855,7 @@ fps: 25
 ### Strategy 4: Close Competing Processes
 
 During inference, stop:
+
 - rerun viewer (`display_data: false`) if running headless
 - Any other GPU workloads
 - Background processes with high CPU/memory usage
@@ -862,22 +884,23 @@ Holds each action for 2 control ticks, halving effective arm speed. The chunk pl
 
 ### 11.1 Dataset Inventory
 
-| Dataset | Location | Cameras | Notes |
-|---|---|---|---|
-| test3 | `data/test3/` | side | `state_cond: true`; first async LoRA + sync training run |
-| test4 | `data/test4/` | wrist + up | Episodes 020 & 041 have severe frame drop — do not use for training |
-| test5 | `data/test5/` | wrist + up | — |
-| test6 | `data/test6/` | wrist + up | `state_cond: false` model variant |
-| test8 | `data/test8/` | wrist + up | **Final dataset; both async and sync final models trained on this** |
+| Dataset | Location        | Cameras    | Notes                                                                     |
+| ------- | --------------- | ---------- | ------------------------------------------------------------------------- |
+| test3   | `data/test3/` | side       | `state_cond: true`; first async LoRA + sync training run                |
+| test4   | `data/test4/` | wrist + up | Episodes 020 & 041 have severe frame drop — do not use for training      |
+| test5   | `data/test5/` | wrist + up | —                                                                        |
+| test6   | `data/test6/` | wrist + up | `state_cond: false` model variant                                       |
+| test8   | `data/test8/` | wrist + up | **Final dataset; both async and sync final models trained on this** |
 
 ### 11.2 Model Inventory
 
-| Model | Path | Mode | Dataset |
-|---|---|---|---|
-| async_test8 | `models/async_test8/` | Async + LoRA | test8 |
-| sync_test8 | `models/sync_test8/` | Sync | test8 |
+| Model       | Path                    | Mode         | Dataset |
+| ----------- | ----------------------- | ------------ | ------- |
+| async_test8 | `models/async_test8/` | Async + LoRA | test8   |
+| sync_test8  | `models/sync_test8/`  | Sync         | test8   |
 
 Each model directory contains:
+
 - `pretrained_model/` — `config.json` + `model.safetensors` (inference-ready)
 - `training_state/` — optimizer state, scheduler, step count (for resuming training)
 
@@ -885,13 +908,14 @@ Each model directory contains:
 
 Different datasets produced models with different configs. **Mixing them causes silent failure:**
 
-| Model | `state_cond` | Camera names | Inference YAML to use |
-|---|---|---|---|
-| test3 | `true` | `side` | Must have camera named `side`; joint state required |
-| test6 | `false` | `wrist`, `up` | Must have cameras named `wrist` and `up`; no joint state |
-| test8 | `true` | `wrist`, `up` | Must have cameras named `wrist` and `up`; joint state required |
+| Model | `state_cond` | Camera names      | Inference YAML to use                                              |
+| ----- | -------------- | ----------------- | ------------------------------------------------------------------ |
+| test3 | `true`       | `side`          | Must have camera named `side`; joint state required              |
+| test6 | `false`      | `wrist`, `up` | Must have cameras named `wrist` and `up`; no joint state       |
+| test8 | `true`       | `wrist`, `up` | Must have cameras named `wrist` and `up`; joint state required |
 
 Always check `config.json` in the pretrained_model directory before running inference:
+
 ```bash
 cat models/<model>/pretrained_model/config.json | python3 -m json.tool | grep -E "state_cond|input_features|camera"
 ```
@@ -904,16 +928,17 @@ cat models/<model>/pretrained_model/config.json | python3 -m json.tool | grep -E
 
 Two separate repos following HuggingFace best practices:
 
-| Repo | Type | URL | Purpose |
-|---|---|---|---|
-| `Frieddeli/vlash` | Dataset | https://huggingface.co/datasets/Frieddeli/vlash | Raw data, training datasets |
-| `Frieddeli/vlash-models` | Model | https://huggingface.co/Frieddeli/vlash-models | Trained weights, checkpoints |
+| Repo                       | Type    | URL                                             | Purpose                      |
+| -------------------------- | ------- | ----------------------------------------------- | ---------------------------- |
+| `Frieddeli/vlash`        | Dataset | https://huggingface.co/datasets/Frieddeli/vlash | Raw data, training datasets  |
+| `Frieddeli/vlash-models` | Model   | https://huggingface.co/Frieddeli/vlash-models   | Trained weights, checkpoints |
 
 Separate repos because dataset and model have different update frequencies, access patterns, versioning needs, and permission requirements.
 
 ### 12.2 Upload Commands
 
 **Uploading datasets:**
+
 ```bash
 # Upload training data
 hf upload Frieddeli/vlash /path/to/train_data train --repo-type dataset
@@ -926,6 +951,7 @@ hf upload Frieddeli/vlash /path/to/data data \
 ```
 
 **Uploading models:**
+
 ```bash
 # Upload checkpoint
 hf upload Frieddeli/vlash-models /path/to/model checkpoint_async_test8
@@ -944,11 +970,14 @@ hf upload-large-folder Frieddeli/vlash-models /path/to/large_model model
 
 ### 13.1 Primary Metric: Task Success Rate
 
-$$SR = \frac{\text{successful attempts}}{\text{total attempts}} \times 100\%$$
+$$
+SR = \frac{\text{successful attempts}}{\text{total attempts}} \times 100\%
+$$
 
 Run **at minimum 20 trials** per evaluation, from the same starting configuration used in training. Report as percentage.
 
 **Definition of success for white ball sorting:**
+
 - Ball is grasped (not just touched)
 - Ball is transported (leaves the surface)
 - Ball is placed in the target zone and released (not just touching the rim)
@@ -956,14 +985,14 @@ Run **at minimum 20 trials** per evaluation, from the same starting configuratio
 
 ### 13.2 Secondary Metrics
 
-| Metric | What it tells you | How to measure |
-|---|---|---|
-| **Time to completion** | Policy efficiency | Stopwatch from episode start to task completion |
-| **Grasp success rate** | Separates grasp failures from transport failures | Count episodes where grasp succeeded even if place failed |
-| **Place success rate (given grasp)** | Isolates transport/placement quality | Count successful places among episodes with successful grasps |
-| **Motion smoothness (jerk)** | Fluid vs. jerky motion | Log follower joint velocity; compute $\frac{d^3q}{dt^3}$ |
-| **Reaction latency** | Time from observation to first motion | Measure from object placement to first arm velocity |
-| **Robustness to position variation** | Generalization | Vary object position ±5 cm from training distribution; re-evaluate SR |
+| Metric                                     | What it tells you                                | How to measure                                                         |
+| ------------------------------------------ | ------------------------------------------------ | ---------------------------------------------------------------------- |
+| **Time to completion**               | Policy efficiency                                | Stopwatch from episode start to task completion                        |
+| **Grasp success rate**               | Separates grasp failures from transport failures | Count episodes where grasp succeeded even if place failed              |
+| **Place success rate (given grasp)** | Isolates transport/placement quality             | Count successful places among episodes with successful grasps          |
+| **Motion smoothness (jerk)**         | Fluid vs. jerky motion                           | Log follower joint velocity; compute$\frac{d^3q}{dt^3}$              |
+| **Reaction latency**                 | Time from observation to first motion            | Measure from object placement to first arm velocity                    |
+| **Robustness to position variation** | Generalization                                   | Vary object position ±5 cm from training distribution; re-evaluate SR |
 
 ### 13.3 Evaluation Protocol
 
@@ -976,9 +1005,9 @@ Run **at minimum 20 trials** per evaluation, from the same starting configuratio
 
 The following metrics could not be extracted from the workspace and must be measured:
 
-- [ ] **Inference latency (ms/step)** — measured on Orin for sync mode
-- [ ] **Success rate** — Sync vs Async *(Async not runnable on Orin — desktop comparison only)*
-- [ ] **Task completion time** — average seconds per full sort cycle
+- [X] **Inference latency (ms/step)** — measured on Orin for sync mode
+- [X] **Success rate** — Sync vs Async *(Async not runnable on Orin — desktop comparison only)*
+- [X] **Task completion time** — average seconds per full sort cycle
 - [ ] **Reaction latency** — time from ball placement to first arm movement
 - [ ] **Chunk boundary freeze duration** — visible pause time in sync mode
 
@@ -986,15 +1015,29 @@ The following metrics could not be extracted from the workspace and must be meas
 
 ## 14. Pixi Task Reference
 
-| Task | Command | Description |
-|---|---|---|
-| `can` | `bash scripts/init_orin_can.sh` | Activate CAN interfaces (`can2`, `can3`) |
-| `teleop` | `bash scripts/teleop.sh` | Teleoperation (leader → follower) |
-| `cam_check` | `python3 -m lerobot.find_cameras realsense` | List and verify RealSense cameras |
-| `record` | `bash scripts/record.sh` | Record episodes (edit dataset name, episode count, task text in script) |
-| `train-pi05-lora` | `vlash train vlash/examples/train/pi05/async_lora_piper.yaml` | Fine-tune PI0.5 async + LoRA |
-| `train-pi05-sync` | `vlash train vlash/examples/train/pi05/sync_piper.yaml` | Fine-tune PI0.5 sync (no LoRA) |
-| `train-pi05-sync-lora` | `vlash train vlash/examples/train/pi05/sync_lora_piper.yaml` | Fine-tune PI0.5 sync + LoRA |
-| `infer-sync` | `vlash run vlash/examples/inference/sync_piper.yaml` | Sync inference on Piper |
-| `infer-async` | `vlash run vlash/examples/inference/async_piper.yaml` | Async inference *(not usable on Jetson)* |
-| `infer-async-fast` | `vlash run vlash/examples/inference/async_piper.yaml --action_quant_ratio=2` | Async inference 2× speed *(not usable on Jetson)* |
+| Task                     | Command                                                                        | Description                                                             |
+| ------------------------ | ------------------------------------------------------------------------------ | ----------------------------------------------------------------------- |
+| `can`                  | `bash scripts/init_orin_can.sh`                                              | Activate CAN interfaces (`can2`, `can3`)                            |
+| `teleop`               | `bash scripts/teleop.sh`                                                     | Teleoperation (leader → follower)                                      |
+| `cam_check`            | `python3 -m lerobot.find_cameras realsense`                                  | List and verify RealSense cameras                                       |
+| `record`               | `bash scripts/record.sh`                                                     | Record episodes (edit dataset name, episode count, task text in script) |
+| `train-pi05-lora`      | `vlash train vlash/examples/train/pi05/async_lora_piper.yaml`                | Fine-tune PI0.5 async + LoRA                                            |
+| `train-pi05-sync`      | `vlash train vlash/examples/train/pi05/sync_piper.yaml`                      | Fine-tune PI0.5 sync (no LoRA)                                          |
+| `train-pi05-sync-lora` | `vlash train vlash/examples/train/pi05/sync_lora_piper.yaml`                 | Fine-tune PI0.5 sync + LoRA                                             |
+| `infer-sync`           | `vlash run vlash/examples/inference/sync_piper.yaml`                         | Sync inference on Piper                                                 |
+| `infer-async`          | `vlash run vlash/examples/inference/async_piper.yaml`                        | Async inference*(not usable on Jetson)*                                 |
+| `infer-async-fast`     | `vlash run vlash/examples/inference/async_piper.yaml --action_quant_ratio=2` | Async inference 2× speed*(not usable on Jetson)*                       |
+
+  [VLASH] Performance Summary  |  mode: async
+  Avg inference time   : 184.5 ms
+  Min inference time   : 16.4 ms
+  Max inference time   : 490.7 ms
+  Std inference time   : 219.2 ms
+  Task time ： 52
+
+  [VLASH] Performance Summary  |  mode: sync
+  Avg inference time   : 5444.1 ms
+  Min inference time   : 4406.6 ms
+  Max inference time   : 6878.9 ms
+  Std inference time   : 683.0 ms
+  Task time ： 153

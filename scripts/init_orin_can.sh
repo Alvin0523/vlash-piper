@@ -85,15 +85,15 @@ echo "============================================================"
 echo ""
 
 FAIL=0
+FOUND=0
 for iface in can2 can3; do
     echo "   🔎 Checking for interface: $iface ..."
     if ! ip link show "$iface" &>/dev/null; then
-        echo "   ❌ [ERROR] '$iface' not detected."
-        echo "        → Make sure the USB-CAN adapter is plugged in and the driver is loaded."
-        FAIL=1
+        echo "   ⚠️  [WARN] '$iface' not detected — skipping."
         echo ""
         continue
     fi
+    FOUND=$((FOUND + 1))
 
     echo "   📡 Configuring '$iface' (type=can, bitrate=1000000) ..."
     sudo ip link set "$iface" type can bitrate 1000000
@@ -102,12 +102,18 @@ for iface in can2 can3; do
     echo ""
 done
 
+if [ "$FOUND" -eq 0 ]; then
+    echo "   ❌ [ERROR] No external USB-CAN interfaces (can2/can3) were detected."
+    echo "        → Make sure at least one USB-CAN adapter is plugged in and the driver is loaded."
+    FAIL=1
+fi
+
 # ─────────────────────────────────────────────────────────────
 echo "============================================================"
 echo "📊 Current CAN interface status"
 echo "============================================================"
 echo ""
-ip -br link show type can 2>/dev/null || echo "   ℹ️  No CAN interfaces found."
+ip -br link show type can 2>/dev/null || echo "   ℹ️  No CAN interfaces fouDelete episode 80's data (parquet + metadata entry) so the dataset has 80 complete episodes, and re-record itnd."
 echo ""
 
 # ─────────────────────────────────────────────────────────────
@@ -120,6 +126,6 @@ if [ "$FAIL" -ne 0 ]; then
 else
     echo "✅  Setup complete!"
     echo "   Onboard : can0 (c310000.mttcan)  |  can1 (c320000.mttcan)"
-    echo "   External: can2 (USB-CAN)          |  can3 (USB-CAN)"
+    echo "   External: $FOUND interface(s) active (can2/can3, USB-CAN)"
     echo "============================================================"
 fi

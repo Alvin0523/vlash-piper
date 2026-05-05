@@ -56,15 +56,21 @@ ip -br link show type can
 
 ## 4. Data Collection
 
+The recorded dataset for this project is published on Hugging Face:
+
+> **Dataset:** [huggingface.co/datasets/Frieddeli/vlash](https://huggingface.co/datasets/Frieddeli/vlash)
+
+To record your own episodes:
+
 ```bash
 pixi run record
 ```
 
 This calls `scripts/record.sh`. Edit that file to configure:
 
-- Dataset name
-- Episode count
-- Task description text
+- `DATASET_NAME` — local folder name for the dataset
+- `NUM_EPISODES` — how many episodes to record
+- `TASK_DESC` — natural language task description (must match training)
 
 Recorded datasets land in `data/`.
 
@@ -98,7 +104,28 @@ pixi run train-pi05-sync-lora
 
 ---
 
-## 6. Inference
+## 6. Download the Model
+
+The fine-tuned π0.5 checkpoint for this project is published on Hugging Face:
+
+> **Model:** [huggingface.co/Frieddeli/vlash](https://huggingface.co/Frieddeli/vlash)
+
+Download it into `models/` before running inference:
+
+```bash
+huggingface-cli download Frieddeli/vlash --local-dir models/vlash-pi05
+```
+
+Then set the path in your inference YAML:
+
+```yaml
+policy:
+  path: models/vlash-pi05
+```
+
+---
+
+## 7. Inference
 
 ```bash
 # Async inference — requires desktop GPU with torch.compile support
@@ -119,7 +146,7 @@ pixi run infer-async-fast
 
 ---
 
-## 7. Pixi Task Reference
+## 8. Pixi Task Reference
 
 | Task | Underlying Command |
 |---|---|

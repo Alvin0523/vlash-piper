@@ -27,6 +27,13 @@ This workspace combines two git submodules into a single [Pixi](https://pixi.sh)
 | `vlash/` | Async VLA fine-tuning & inference framework | [mit-han-lab/vlash](https://github.com/mit-han-lab/vlash) |
 | `lerobot_piper/` | LeRobot adapted for PIPER arm (CAN bus) | [WeGo-Robotics/lerobot_piper](https://github.com/WeGo-Robotics/lerobot_piper) |
 
+### 🤗 Hugging Face
+
+| Type | Link |
+|---|---|
+| Dataset | [Frieddeli/vlash](https://huggingface.co/datasets/Frieddeli/vlash) |
+| Model | [Frieddeli/vlash](https://huggingface.co/Frieddeli/vlash) |
+
 ---
 
 ## 📁 Project Structure

@@ -1,3 +1,7 @@
+---
+icon: lucide/puzzle
+---
+
 # Integration Notes
 
 **Goal:** Run VLASH (MIT HAN Lab) with the Piper arm (WeGo Robotics `lerobot_piper`) on Jetson AGX Orin inside a single Pixi environment.

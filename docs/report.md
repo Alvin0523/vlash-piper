@@ -1,3 +1,7 @@
+---
+icon: lucide/file-text
+---
+
 # VLASH on Piper Arm — Full Technical Reference
 
 **Project:** VLASH (MIT HAN Lab) + Piper Arm (WeGo Robotics) on Jetson AGX Orin

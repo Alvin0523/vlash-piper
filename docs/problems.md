@@ -1,3 +1,7 @@
+---
+icon: lucide/bug
+---
+
 # Problems, Diagnostics & Fixes Log
 
 **Project:** VLASH + Piper on Jetson AGX Orin  
@@ -10,79 +14,14 @@ This document is the running log of every problem hit during integration, record
 
 ## Table of Contents
 
-1. [torch.compile Crash on Jetson Orin (nvgpu)](#1-torchcompile-crash-on-jetson-orin-nvgpu)
-2. [USB Camera Frame Drop — Episodes 020 & 041 (test4)](#2-usb-camera-frame-drop--episodes-020--041-test4)
-3. [Config Mismatch: state_cond / Camera Names](#3-config-mismatch-state_cond--camera-names)
-4. [Integration Issues Fixed](#4-integration-issues-fixed)
-5. [Dependency Risks on aarch64](#5-dependency-risks-on-aarch64)
+1. [USB Camera Frame Drop — Episodes 020 & 041 (test4)](#1-usb-camera-frame-drop--episodes-020--041-test4)
+2. [Config Mismatch: state_cond / Camera Names](#2-config-mismatch-state_cond--camera-names)
+3. [Integration Issues Fixed](#3-integration-issues-fixed)
+4. [Dependency Risks on aarch64](#4-dependency-risks-on-aarch64)
 
 ---
 
-## 1. torch.compile Crash on Jetson Orin (nvgpu)
-
-**Status:** Known limitation — no fix available. Workaround: use sync mode only.  
-**Affects:** Async inference, `compile_model: true`  
-**Discovered:** During first async inference attempt on Jetson
-
-### Symptoms
-
-Running `pixi run infer-async` (which has `compile_model: true`) crashes immediately with cuBLAS or cuDNN errors before any inference runs. The crash happens during model compilation, not during forward pass.
-
-### Root Cause
-
-Jetson Orin AGX uses NVIDIA's **nvgpu** driver — a custom GPU driver for integrated SoCs, fundamentally different from the discrete GPU driver used by desktop GPUs (RTX series, etc.).
-
-The nvgpu driver has incomplete support for:
-- `torch.compile`'s Triton backend (generates PTX that triggers nvgpu-specific cuDNN/cuBLAS path validation issues)
-- The `inductor` compilation backend that PyTorch 2.x uses by default
-- The full CUDA graph capture API surface that `torch.compile` relies on
-
-When `compile_model: true` is set, VLASH calls `torch.compile(model)` which triggers a cuDNN graph capture. On nvgpu, this fails because the driver does not implement the required graph API calls.
-
-Desktop GPUs (RTX 3090, 4090, 5090, etc.) use the standard NVIDIA driver which fully supports `torch.compile` and the Triton backend. This is why VLASH works fine on a desktop workstation but crashes on Jetson.
-
-### The Hard Requirement
-
-VLASH enforces this check in `run_config.py`:
-
-```python
-if self.inference_overlap_steps > 0 and not self.policy.compile_model:
-    raise ValueError(
-        "When inference_overlap_steps > 0, policy.compile_model must be True. "
-        "Async inference requires compiled model for CPU overlapping."
-    )
-```
-
-**Async inference requires `compile_model: true` — no way around this.** Since `compile_model: true` crashes on Jetson, async inference is permanently unavailable on Jetson Orin.
-
-### Resolution / Workaround
-
-Always use sync mode on Jetson Orin:
-
-```yaml
-# In any inference YAML
-compile_model: false
-inference_overlap_steps: 0
-```
-
-Use `vlash/examples/inference/sync_piper.yaml` which already has both set correctly.
-
-The `async_piper.yaml` config has `compile_model: true` — **do not use it on Jetson**.
-
-### Performance Impact
-
-Without `torch.compile`, inference is slower (1.5–3× vs compiled). This is partially compensated by:
-- `fuse_qkv: true` — fuses Q/K/V projection kernels in attention
-- `fuse_gate_up: true` — fuses gate/up projections in SwiGLU FFN layers
-- Running the Jetson in max performance mode: `sudo nvpmodel -m 0 && sudo jetson_clocks`
-
-### Future Fix
-
-This will be resolved if NVIDIA adds full `torch.compile` / CUDA graph support to the nvgpu driver in a future JetPack release. No timeline is known.
-
----
-
-## 2. USB Camera Frame Drop — Episodes 020 & 041 (test4)
+## 1. USB Camera Frame Drop — Episodes 020 & 041 (test4)
 
 **Status:** Root cause confirmed — episodes 020 & 041 are invalid for training.  
 **Report Date:** 2026-04-28  
@@ -254,7 +193,7 @@ if elapsed > 2.0 and actual_fps < expected_fps * 0.8:
 
 ---
 
-## 3. Config Mismatch: state_cond / Camera Names
+## 2. Config Mismatch: state_cond / Camera Names
 
 **Status:** Ongoing risk — must check manually before each inference run.  
 **Consequence:** Silent failure — arm trembles, freezes, or moves erratically with no error message.
@@ -301,59 +240,59 @@ Then verify the inference YAML:
 
 ---
 
-## 4. Integration Issues Fixed
+## 3. Integration Issues Fixed
 
 These were all resolved during initial integration. Documented here for reference.
 
-### 4.1 `KeyError: 'piper_follower'` on VLASH startup
+### 3.1 `KeyError: 'piper_follower'` on VLASH startup
 
 **Cause:** draccus (lerobot's config parser) uses a type registry that is populated by importing config subclasses. `PiperFollowerConfig` was never imported, so the registry had no entry for `piper_follower`.
 
 **Fix:** Added `from lerobot.robots.piper_follower import PiperFollowerConfig` to `vlash/vlash/configs/run_config.py`.
 
-### 4.2 `ModuleNotFoundError: lerobot.robots.reachy2` on VLASH startup
+### 3.2 `ModuleNotFoundError: lerobot.robots.reachy2` on VLASH startup
 
 **Cause:** VLASH's `run_config.py` imported reachy2 unconditionally at module load. lerobot_piper does not ship the reachy2 module.
 
 **Fix:** Wrapped the import in `try/except ModuleNotFoundError`.
 
-### 4.3 `ImportError: cannot import name 'OBS_IMAGES' from 'lerobot.utils.constants'`
+### 3.3 `ImportError: cannot import name 'OBS_IMAGES' from 'lerobot.utils.constants'`
 
 **Cause:** VLASH imports constants from `lerobot.utils.constants`. In lerobot_piper, these constants are at `lerobot.constants`.
 
 **Fix:** Created `lerobot_piper/src/lerobot/utils/constants.py` containing `from lerobot.constants import *`.
 
-### 4.4 `AttributeError: module 'rerun' has no attribute 'Scalar'`
+### 3.4 `AttributeError: module 'rerun' has no attribute 'Scalar'`
 
 **Cause:** rerun ≥ 0.23 renamed `rr.Scalar` to `rr.Scalars`. lerobot_piper's visualization code used the old name.
 
 **Fix:** Renamed all 4 occurrences of `rr.Scalar(` → `rr.Scalars(` in `visualization_utils.py`.
 
-### 4.5 `AttributeError: module 'lerobot.utils.visualization_utils' has no attribute 'init_rerun'`
+### 3.5 `AttributeError: module 'lerobot.utils.visualization_utils' has no attribute 'init_rerun'`
 
 **Cause:** VLASH imports `init_rerun` (public) but lerobot_piper only defines `_init_rerun` (private).
 
 **Fix:** Added `init_rerun = _init_rerun` alias at the bottom of `visualization_utils.py`.
 
-### 4.6 pixi pulls official lerobot 0.4.1 from PyPI, overwriting lerobot_piper
+### 3.6 pixi pulls official lerobot 0.4.1 from PyPI, overwriting lerobot_piper
 
 **Cause:** VLASH pins `lerobot==0.4.1`. lerobot_piper was versioned `0.3.3`, so pixi saw it as outdated and resolved to official lerobot 0.4.1 from PyPI (which has no Piper support).
 
 **Fix:** Bumped `version` in `lerobot_piper/pyproject.toml` from `0.3.3` to `0.4.1`.
 
-### 4.7 No `manylinux_2_28_aarch64` wheel for rerun-sdk 0.21–0.22
+### 3.7 No `manylinux_2_28_aarch64` wheel for rerun-sdk 0.21–0.22
 
 **Cause:** rerun-sdk versions 0.21 and 0.22 were not published with an aarch64 wheel. Pixi install fails on Jetson.
 
 **Fix:** Changed rerun-sdk constraint from `>=0.21.0,<0.23.0` to `>=0.23.0` in `lerobot_piper/pyproject.toml`.
 
-### 4.8 transformers version conflict between smolvla and VLASH
+### 3.8 transformers version conflict between smolvla and VLASH
 
 **Cause:** lerobot_piper's smolvla extra pinned `transformers<4.52.0`. VLASH's git-pinned transformers is ≥4.52.0. Hard conflict.
 
 **Fix:** Removed the `<4.52.0` upper bound from `lerobot_piper/pyproject.toml`, leaving `>=4.50.3`.
 
-### 4.9 `GLIBCXX_3.4.30 not found` pyarrow crash
+### 3.9 `GLIBCXX_3.4.30 not found` pyarrow crash
 
 **Cause:** Pixi ships its own `libstdc++.so.6` which may be an older version than what pyarrow requires. On aarch64 Jetson, this causes a GLIBCXX symbol version mismatch when pyarrow is imported.
 
@@ -361,7 +300,7 @@ These were all resolved during initial integration. Documented here for referenc
 
 ---
 
-## 5. Dependency Risks on aarch64
+## 4. Dependency Risks on aarch64
 
 Known risks when running on Jetson Orin (linux-aarch64) — tracked here for future JetPack/package updates.
 

@@ -1,4 +1,12 @@
+---
+icon: lucide/home
+---
+
 # Documentation Index
+
+## Getting Started
+
+- [Operation Guide](operation_guide.md) — Clone, install, hardware checks, data collection, fine-tuning, inference, and full Pixi task reference
 
 ## Main Reference
 
@@ -10,4 +18,8 @@
 
 ## Problems & Diagnostics Log
 
-- [Problems, Diagnostics & Fixes](problems.md) — torch.compile crash on Jetson (nvgpu), USB camera frame drop analysis (episodes 020 & 041), config mismatch issues, all integration bugs fixed, aarch64 dependency risks
+- [Problems, Diagnostics & Fixes](problems.md) — USB camera frame drop analysis (episodes 020 & 041), config mismatch issues, all integration bugs fixed, aarch64 dependency risks
+
+## Docs Site
+
+- [Zensical Docs Guide](guide.md) — How this documentation site is built, local preview, adding pages, Zensical syntax reference, and deployment

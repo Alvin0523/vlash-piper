@@ -46,9 +46,11 @@ Copyright &copy; 2026 The authors
 # Read more: https://zensical.org/docs/setup/navigation/
 nav = [
   { "Home" = "index.md" },
+  { "Operation Guide" = "operation_guide.md" },
   { "Integration" = "integration.md" },
-  { "Guide" = "guide.md" },
   { "Problems" = "problems.md" },
+  { "Report" = "report.md" },
+  { "Guide" = "guide.md" },
 ]
 
 # With the "extra_css" option you can add your own CSS styling to customize

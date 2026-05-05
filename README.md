@@ -96,7 +96,7 @@ Already cloned without `--recursive`? Run `git submodule update --init --recursi
 
 ## 🎬 Demo
 
-<video src="media/demo.mp4" controls width="100%"></video>
+<video src="https://github.com/user-attachments/assets/c39436d3-35a7-4921-bd75-0f5f0b75c4ab" controls width="100%"></video>
 
 > π0.5 deployed on AgileX PIPER via async VLASH inference on Jetson AGX Orin.
 

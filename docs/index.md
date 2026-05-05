@@ -10,7 +10,7 @@ icon: lucide/home
 
 ## Main Reference
 
-- [Full Technical Report](report.md) — System specs, architecture, training & inference configs, async vs sync deep dive, VLASH vs LeRobot comparison, data collection, camera setup, HuggingFace setup, benchmarking, Pixi task reference
+- [Full Technical Report (PDF)](report/report.pdf) — System specs, architecture, training & inference configs, async vs sync deep dive, VLASH vs LeRobot comparison, data collection, camera setup, HuggingFace setup, benchmarking, Pixi task reference
 
 ## Integration
 

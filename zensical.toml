@@ -49,7 +49,6 @@ nav = [
   { "Operation Guide" = "operation_guide.md" },
   { "Integration" = "integration.md" },
   { "Problems" = "problems.md" },
-  { "Report" = "report.md" },
   { "Guide" = "guide.md" },
 ]
 

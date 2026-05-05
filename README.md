@@ -40,20 +40,31 @@ This workspace combines two git submodules into a single [Pixi](https://pixi.sh)
 
 ```
 vlash-piper/
-├── data/                    # datasets (place LeRobot datasets here)
-├── docs/                    # integration guides, diagnostics & reports
+├── data/                    # LeRobot datasets (place datasets here)
+├── docs/                    # documentation & course report
 │   ├── index.md
 │   ├── guide.md
 │   ├── integration.md
+│   ├── operation_guide.md
 │   ├── problems.md
-│   └── report.md
-├── lerobot_piper/           # submodule — LeRobot fork for PIPER arm
-├── models/                  # model checkpoints (output_dir goes here)
+│   └── report/
+│       ├── report.qmd       # Quarto source
+│       ├── report.pdf       # rendered PDF
+│       ├── references.bib
+│       ├── system_diagram.png
+│       └── inference_timeline.png
+├── media/                   # demo video & hardware photos
+│   ├── demo.mp4
+│   ├── view-1.jpg
+│   ├── view_3.jpg
+│   └── view_4.jpg
+├── models/                  # model checkpoints (output_dir)
 ├── scripts/                 # helper shell scripts
 │   ├── activate.sh
 │   ├── init_orin_can.sh
 │   ├── record.sh
 │   └── teleop.sh
+├── lerobot_piper/           # submodule — LeRobot fork for PIPER arm
 ├── vlash/                   # submodule — VLASH async inference framework
 ├── pixi.toml                # Pixi task definitions & dependencies
 └── zensical.toml            # Zensical docs site config
@@ -85,9 +96,23 @@ Already cloned without `--recursive`? Run `git submodule update --init --recursi
 
 ## 🎬 Demo
 
-<video src="assets/demo.mp4" controls width="100%"></video>
+<video src="media/demo.mp4" controls width="100%"></video>
 
 > π0.5 deployed on AgileX PIPER via async VLASH inference on Jetson AGX Orin.
+
+### 📷 Setup
+
+| | | |
+|:---:|:---:|:---:|
+| ![View 1](media/view_1.jpg) | ![View 4](media/view_4.jpg) |
+
+---
+
+## 🏗️ System Architecture
+
+![VLASH-Piper System Architecture](docs/report/system_diagram.png)
+
+> **Left:** RealSense cameras feed RGB frames into the **VLASH Runtime** on Jetson AGX Orin. The runtime schedules async inference calls to the **PI0.5 Model** (flow-matching VLA, PaliGemma backbone, bfloat16) with a lookahead delay *d*, streams the resulting action chunk to **lerobot_piper**, which drives the Piper follower arm over CAN bus at 30 Hz.
 
 ---
 

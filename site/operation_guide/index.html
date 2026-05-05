@@ -362,10 +362,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#6-inference" class="md-nav__link">
+  <a href="#6-download-the-model" class="md-nav__link">
     <span class="md-ellipsis">
       <span class="md-typeset">
-        6. Inference
+        6. Download the Model
       </span>
     </span>
   </a>
@@ -373,10 +373,21 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#7-pixi-task-reference" class="md-nav__link">
+  <a href="#7-inference" class="md-nav__link">
     <span class="md-ellipsis">
       <span class="md-typeset">
-        7. Pixi Task Reference
+        7. Inference
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8-pixi-task-reference" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        8. Pixi Task Reference
       </span>
     </span>
   </a>
@@ -436,34 +447,6 @@
     
   
   Problems
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-    
-      
-      
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../report/" class="md-nav__link">
-        
-  
-  
-    <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-file-text" viewBox="0 0 24 24"><path d="M6 22a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h8a2.4 2.4 0 0 1 1.704.706l3.588 3.588A2.4 2.4 0 0 1 20 8v12a2 2 0 0 1-2 2z"/><path d="M14 2v5a1 1 0 0 0 1 1h5M10 9H8M16 13H8M16 17H8"/></svg>
-  
-  <span class="md-ellipsis">
-    
-  
-  Report
 
     
   </span>
@@ -599,10 +582,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#6-inference" class="md-nav__link">
+  <a href="#6-download-the-model" class="md-nav__link">
     <span class="md-ellipsis">
       <span class="md-typeset">
-        6. Inference
+        6. Download the Model
       </span>
     </span>
   </a>
@@ -610,10 +593,21 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#7-pixi-task-reference" class="md-nav__link">
+  <a href="#7-inference" class="md-nav__link">
     <span class="md-ellipsis">
       <span class="md-typeset">
-        7. Pixi Task Reference
+        7. Inference
+      </span>
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8-pixi-task-reference" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        8. Pixi Task Reference
       </span>
     </span>
   </a>
@@ -673,13 +667,18 @@
 </span></code></pre></div>
 <hr />
 <h2 id="4-data-collection">4. Data Collection<a class="headerlink" href="#4-data-collection" title="Permanent link">&para;</a></h2>
+<p>The recorded dataset for this project is published on Hugging Face:</p>
+<blockquote>
+<p><strong>Dataset:</strong> <a href="https://huggingface.co/datasets/Frieddeli/vlash">huggingface.co/datasets/Frieddeli/vlash</a></p>
+</blockquote>
+<p>To record your own episodes:</p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>pixi<span class="w"> </span>run<span class="w"> </span>record
 </span></code></pre></div>
 <p>This calls <code>scripts/record.sh</code>. Edit that file to configure:</p>
 <ul>
-<li>Dataset name</li>
-<li>Episode count</li>
-<li>Task description text</li>
+<li><code>DATASET_NAME</code> — local folder name for the dataset</li>
+<li><code>NUM_EPISODES</code> — how many episodes to record</li>
+<li><code>TASK_DESC</code> — natural language task description (must match training)</li>
 </ul>
 <p>Recorded datasets land in <code>data/</code>.</p>
 <hr />
@@ -726,24 +725,37 @@
 LoRA is a separate independent choice — sync configs can also use LoRA.</p>
 </div>
 <hr />
-<h2 id="6-inference">6. Inference<a class="headerlink" href="#6-inference" title="Permanent link">&para;</a></h2>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="c1"># Async inference — requires desktop GPU with torch.compile support</span>
-</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>pixi<span class="w"> </span>run<span class="w"> </span>infer-async
-</span><span id="__span-8-3"><a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a>
-</span><span id="__span-8-4"><a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a><span class="c1"># Async inference with 2× action quantization speedup</span>
-</span><span id="__span-8-5"><a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a>pixi<span class="w"> </span>run<span class="w"> </span>infer-async-fast
+<h2 id="6-download-the-model">6. Download the Model<a class="headerlink" href="#6-download-the-model" title="Permanent link">&para;</a></h2>
+<p>The fine-tuned π0.5 checkpoint for this project is published on Hugging Face:</p>
+<blockquote>
+<p><strong>Model:</strong> <a href="https://huggingface.co/Frieddeli/vlash">huggingface.co/Frieddeli/vlash</a></p>
+</blockquote>
+<p>Download it into <code>models/</code> before running inference:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>huggingface-cli<span class="w"> </span>download<span class="w"> </span>Frieddeli/vlash<span class="w"> </span>--local-dir<span class="w"> </span>models/vlash-pi05
+</span></code></pre></div>
+<p>Then set the path in your inference YAML:</p>
+<div class="language-yaml highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="nt">policy</span><span class="p">:</span>
+</span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a><span class="w">  </span><span class="nt">path</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">models/vlash-pi05</span>
+</span></code></pre></div>
+<hr />
+<h2 id="7-inference">7. Inference<a class="headerlink" href="#7-inference" title="Permanent link">&para;</a></h2>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="c1"># Async inference — requires desktop GPU with torch.compile support</span>
+</span><span id="__span-10-2"><a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a>pixi<span class="w"> </span>run<span class="w"> </span>infer-async
+</span><span id="__span-10-3"><a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a>
+</span><span id="__span-10-4"><a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a><span class="c1"># Async inference with 2× action quantization speedup</span>
+</span><span id="__span-10-5"><a id="__codelineno-10-5" name="__codelineno-10-5" href="#__codelineno-10-5"></a>pixi<span class="w"> </span>run<span class="w"> </span>infer-async-fast
 </span></code></pre></div>
 <div class="admonition warning">
 <p class="admonition-title">Jetson Orin</p>
 <p><code>torch.compile</code> is not supported on the Jetson nvgpu driver. Use sync inference configs on Jetson:
-<div class="language-yaml highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="nt">compile_model</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span>
-</span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a><span class="nt">inference_overlap_steps</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0</span>
+<div class="language-yaml highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="nt">compile_model</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span>
+</span><span id="__span-11-2"><a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a><span class="nt">inference_overlap_steps</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0</span>
 </span></code></pre></div>
 Use <code>vlash/examples/inference/sync_piper.yaml</code> which already has both set correctly.
 See <a href="../problems/">Problems &amp; Diagnostics</a> for the full root cause analysis.</p>
 </div>
 <hr />
-<h2 id="7-pixi-task-reference">7. Pixi Task Reference<a class="headerlink" href="#7-pixi-task-reference" title="Permanent link">&para;</a></h2>
+<h2 id="8-pixi-task-reference">8. Pixi Task Reference<a class="headerlink" href="#8-pixi-task-reference" title="Permanent link">&para;</a></h2>
 <table>
 <thead>
 <tr>
@@ -783,6 +795,14 @@ See <a href="../problems/">Problems &amp; Diagnostics</a> for the full root caus
 <tr>
 <td><code>pixi run can</code></td>
 <td>CAN interface initialisation (<code>can2</code>, <code>can3</code>)</td>
+</tr>
+<tr>
+<td><code>pixi run docs-build</code></td>
+<td>Build the Zensical docs site into <code>site/</code></td>
+</tr>
+<tr>
+<td><code>pixi run docs-serve</code></td>
+<td>Serve the docs locally with live reload at <code>localhost:8000</code></td>
 </tr>
 </tbody>
 </table>

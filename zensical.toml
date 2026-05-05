@@ -48,7 +48,7 @@ nav = [
   { "Home" = "index.md" },
   { "Integration" = "integration.md" },
   { "Guide" = "guide.md" },
-  { "Integration" = "integration.md" },
+  { "Problems" = "problems.md" },
 ]
 
 # With the "extra_css" option you can add your own CSS styling to customize

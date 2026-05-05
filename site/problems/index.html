@@ -13,6 +13,8 @@
       
       
       
+        <link rel="prev" href="../guide/">
+      
       
       
         
@@ -292,17 +294,44 @@
       
   
   
+    
   
   
-    <li class="md-nav__item">
-      <a href="../integration/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Problems
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="././" class="md-nav__link md-nav__link--active">
         
   
   
   <span class="md-ellipsis">
     
   
-    Integration
+    Problems
   
 
     
@@ -311,6 +340,458 @@
   
 
       </a>
+      
+        
+
+
+<nav class="md-nav md-nav--secondary" aria-label="On this page">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      On this page
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#table-of-contents" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Table of Contents
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1-torchcompile-crash-on-jetson-orin-nvgpu" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. torch.compile Crash on Jetson Orin (nvgpu)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1. torch.compile Crash on Jetson Orin (nvgpu)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#symptoms" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Symptoms
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#root-cause" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Root Cause
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-hard-requirement" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Hard Requirement
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#resolution-workaround" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Resolution / Workaround
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#performance-impact" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Performance Impact
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#future-fix" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Future Fix
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-usb-camera-frame-drop-episodes-020-041-test4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. USB Camera Frame Drop — Episodes 020 &amp; 041 (test4)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. USB Camera Frame Drop — Episodes 020 &amp; 041 (test4)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#summary" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Summary
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#frame-count-analysis" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Frame Count Analysis
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mp4-file-integrity" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        MP4 File Integrity
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#file-size-paradox" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        File Size Paradox
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#why-transfer-corruption-can-be-ruled-out" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why Transfer Corruption Can Be Ruled Out
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#root-cause-camera-capture-layer-dropped-frames" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Root Cause: Camera Capture Layer Dropped Frames
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#likely-root-causes-ranked-by-probability" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Likely Root Causes (Ranked by Probability)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#modification-timestamps-confirming-normal-recording-not-transfer-issue" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Modification Timestamps (Confirming Normal Recording, Not Transfer Issue)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#immediate-actions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Immediate Actions
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fix-options" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Fix Options
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#verification-command" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Verification Command
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#code-level-hardening-recommended" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Code-Level Hardening (Recommended)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-config-mismatch-state_cond-camera-names" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. Config Mismatch: state_cond / Camera Names
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. Config Mismatch: state_cond &#x2f; Camera Names">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#problem" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Problem
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#model-variants" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Model Variants
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#failure-modes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Failure Modes
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#how-to-check-before-running" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How to Check Before Running
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-integration-issues-fixed" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Integration Issues Fixed
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4. Integration Issues Fixed">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#41-keyerror-piper_follower-on-vlash-startup" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.1 KeyError: 'piper_follower' on VLASH startup
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#42-modulenotfounderror-lerobotrobotsreachy2-on-vlash-startup" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.2 ModuleNotFoundError: lerobot.robots.reachy2 on VLASH startup
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#43-importerror-cannot-import-name-obs_images-from-lerobotutilsconstants" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.3 ImportError: cannot import name 'OBS_IMAGES' from 'lerobot.utils.constants'
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#44-attributeerror-module-rerun-has-no-attribute-scalar" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.4 AttributeError: module 'rerun' has no attribute 'Scalar'
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#45-attributeerror-module-lerobotutilsvisualization_utils-has-no-attribute-init_rerun" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.5 AttributeError: module 'lerobot.utils.visualization_utils' has no attribute 'init_rerun'
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#46-pixi-pulls-official-lerobot-041-from-pypi-overwriting-lerobot_piper" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.6 pixi pulls official lerobot 0.4.1 from PyPI, overwriting lerobot_piper
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#47-no-manylinux_2_28_aarch64-wheel-for-rerun-sdk-021022" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.7 No manylinux_2_28_aarch64 wheel for rerun-sdk 0.21–0.22
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#48-transformers-version-conflict-between-smolvla-and-vlash" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.8 transformers version conflict between smolvla and VLASH
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#49-glibcxx_3430-not-found-pyarrow-crash" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.9 GLIBCXX_3.4.30 not found pyarrow crash
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-dependency-risks-on-aarch64" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Dependency Risks on aarch64
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -1375,6 +1856,28 @@
       
         <footer class="md-footer">
   
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer" >
+        
+          
+          <a href="../guide/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Guide">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-arrow-left" viewBox="0 0 24 24"><path d="m12 19-7-7 7-7M19 12H5"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                Guide
+              </div>
+            </div>
+          </a>
+        
+        
+      </nav>
     
   
   <div class="md-footer-meta md-typeset">

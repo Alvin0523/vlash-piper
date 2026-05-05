@@ -26,7 +26,7 @@ Key features used in this project:
 ## Local Preview
 
 ```bash
-# Install Zensical (one-time)
+# Install Zensical (one-time, if not using Pixi)
 pip install zensical
 
 # Serve locally with live reload
@@ -34,6 +34,13 @@ zensical serve
 
 # Build static site into site/
 zensical build
+```
+
+Or, if you're already inside the Pixi environment:
+
+```bash
+pixi run docs-serve   # live reload at localhost:8000
+pixi run docs-build   # build site/
 ```
 
 The local preview is available at `http://localhost:8000`.

@@ -131,3 +131,5 @@ pixi run infer-async-fast
 | `pixi run record` | `scripts/record.sh` |
 | `pixi run cam_check` | Camera detection check |
 | `pixi run can` | CAN interface initialisation (`can2`, `can3`) |
+| `pixi run docs-build` | Build the Zensical docs site into `site/` |
+| `pixi run docs-serve` | Serve the docs locally with live reload at `localhost:8000` |

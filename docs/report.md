@@ -13,19 +13,19 @@ icon: lucide/file-text
 
 ## Table of Contents
 
-1. [System &amp; Hardware](#1-system--hardware)
+1. [System & Hardware](#1-system-hardware)
 2. [Architecture Overview](#2-architecture-overview)
 3. [Integration — What Was Changed](integration.md)
 4. [Training Configuration](#4-training-configuration)
-5. [Async vs Sync — Deep Dive](#5-async-vs-sync--deep-dive)
+5. [Async vs Sync — Deep Dive](#5-async-vs-sync-deep-dive)
 6. [VLASH vs LeRobot Training: Architecture Comparison](#6-vlash-vs-lerobot-training-architecture-comparison)
 7. [Data Collection Guide](#7-data-collection-guide)
 8. [Camera Setup](#8-camera-setup)
-9. [Inference Configuration — Line-by-Line](#9-inference-configuration--line-by-line)
+9. [Inference Configuration — Line-by-Line](#9-inference-configuration-line-by-line)
 10. [Making Sync Inference Smoother](#10-making-sync-inference-smoother)
-11. [Datasets &amp; Models](#11-datasets--models)
+11. [Datasets & Models](#11-datasets-models)
 12. [HuggingFace Repository Setup](#12-huggingface-repository-setup)
-13. [Benchmarking &amp; Evaluation](#13-benchmarking--evaluation)
+13. [Benchmarking & Evaluation](#13-benchmarking-evaluation)
 14. [Pixi Task Reference](#14-pixi-task-reference)
 
 ---
@@ -195,7 +195,7 @@ These settings are the same across all training modes (async LoRA, sync, sync Lo
 | **Batch size**      | 16                       |                                                                                                                              |
 | **Optimizer**       | AdamW                    |                                                                                                                              |
 | **Learning rate**   | 5.0e-5                   | Proven value from VLASH paper. Do not increase. If loss diverges, halve it.                                                  |
-| **LR betas**        | [0.9, 0.95]              |                                                                                                                              |
+| **LR betas**        | \[0.9, 0.95\]           |                                                                                                                              |
 | **Weight decay**    | 1.0e-10                  |                                                                                                                              |
 | **Scheduler**       | Cosine decay with warmup |                                                                                                                              |
 | **Warmup steps**    | 1,000                    | Do not reduce. PI0.5's LM backbone is highly LR-sensitive; skipping warmup causes divergence in the first few hundred steps. |
@@ -723,7 +723,7 @@ Path to the checkpoint directory (containing `config.json` + `model.safetensors`
   compile_model: false
 ```
 
-**Must be `false` on Jetson Orin.** See [Section 5.4](#54-the-jetson-constraint) and [problems.md](problems.md).
+**Must be `false` on Jetson Orin.** See [Section 5.4](#54-comparison-table) and [problems.md](problems.md).
 
 ```yaml
   device: cuda
@@ -1032,16 +1032,18 @@ The following metrics could not be extracted from the workspace and must be meas
 | `infer-async`          | `vlash run vlash/examples/inference/async_piper.yaml`                        | Async inference*(not usable on Jetson)*                                 |
 | `infer-async-fast`     | `vlash run vlash/examples/inference/async_piper.yaml --action_quant_ratio=2` | Async inference 2× speed*(not usable on Jetson)*                       |
 
-  [VLASH] Performance Summary  |  mode: async
-  Avg inference time   : 184.5 ms
-  Min inference time   : 16.4 ms
-  Max inference time   : 490.7 ms
-  Std inference time   : 219.2 ms
-  Task time ： 52
+```
+[VLASH] Performance Summary  |  mode: async
+Avg inference time   : 184.5 ms
+Min inference time   : 16.4 ms
+Max inference time   : 490.7 ms
+Std inference time   : 219.2 ms
+Task time            : 52 s
 
-  [VLASH] Performance Summary  |  mode: sync
-  Avg inference time   : 5444.1 ms
-  Min inference time   : 4406.6 ms
-  Max inference time   : 6878.9 ms
-  Std inference time   : 683.0 ms
-  Task time ： 153
+[VLASH] Performance Summary  |  mode: sync
+Avg inference time   : 5444.1 ms
+Min inference time   : 4406.6 ms
+Max inference time   : 6878.9 ms
+Std inference time   : 683.0 ms
+Task time            : 153 s
+```

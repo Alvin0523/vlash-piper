@@ -14,7 +14,7 @@
 
 > Fine-tune π0.5 on your AgileX PIPER robotic arm and deploy with real-time async inference — powered by [VLASH](https://github.com/mit-han-lab/vlash) and [LeRobot](https://github.com/huggingface/lerobot).
 
-📖 **Full documentation & operation guide:** [alvin0523.github.io/vlash-piper](https://alvin0523.github.io/vlash-piper/)
+[![Read the Docs](https://img.shields.io/badge/📖%20Read%20the%20Docs-Operation%20Guide%20%26%20Reference-blue?style=for-the-badge)](https://alvin0523.github.io/vlash-piper/)
 
 ---
 
@@ -73,6 +73,14 @@ pixi install
 Already cloned without `--recursive`? Run `git submodule update --init --recursive` first.
 
 👉 For hardware setup, data collection, training, inference, and Pixi task reference — see the **[Operation Guide](https://alvin0523.github.io/vlash-piper/operation_guide/)**.
+
+---
+
+## 🎬 Demo
+
+<video src="assets/demo.mp4" controls width="100%"></video>
+
+> π0.5 deployed on AgileX PIPER via async VLASH inference on Jetson AGX Orin.
 
 ---
 

@@ -14,8 +14,8 @@ This document is the running log of every problem hit during integration, record
 
 ## Table of Contents
 
-1. [USB Camera Frame Drop — Episodes 020 & 041 (test4)](#1-usb-camera-frame-drop--episodes-020--041-test4)
-2. [Config Mismatch: state_cond / Camera Names](#2-config-mismatch-state_cond--camera-names)
+1. [USB Camera Frame Drop — Episodes 020 & 041 (test4)](#1-usb-camera-frame-drop-episodes-020-041-test4)
+2. [Config Mismatch: state_cond / Camera Names](#2-config-mismatch-state_cond-camera-names)
 3. [Integration Issues Fixed](#3-integration-issues-fixed)
 4. [Dependency Risks on aarch64](#4-dependency-risks-on-aarch64)
 

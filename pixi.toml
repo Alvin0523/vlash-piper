@@ -56,3 +56,5 @@ infer-sync = {cmd = "vlash run vlash/examples/inference/sync_piper.yaml", depend
 infer-async = {cmd = "vlash run vlash/examples/inference/async_piper.yaml", depends-on = ["can"], description = "run async inference (Piper robot)"}
 infer-async-fast = {cmd = "vlash run vlash/examples/inference/async_piper.yaml --action_quant_ratio=2", depends-on = ["can"], description = "run async inference with 2x action quantization"}
 benchmark = {cmd = "vlash benchmark vlash/examples/benchmarks/inference_latency.yaml", description = "benchmark inference latency"}
+docs-build = {cmd = "zensical build", description = "build the Zensical docs site into site/"}
+docs-serve = {cmd = "zensical serve", description = "serve the Zensical docs site locally with live reload"}
